@@ -1,0 +1,72 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator json {
+  provider = "prisma-json-types-generator"
+}
+
+model Admin {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  username  String   @unique
+  password  String
+  type      String   @default("ADMIN") // 角色类型: superadmin(超级管理员), admin(管理员)
+  nickname  String?
+  avatar    String?
+  phone     String?  @unique
+  role      Role?    @relation(fields: [roleId], references: [id])
+  roleId    String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Role {
+  id          String       @id @default(cuid())
+  name        String       @unique
+  code        String       @unique // 角色编码,用于程序中识别
+  type        String       @default("CUSTOM") // 角色类型: SYSTEM(系统内置), CUSTOM(自定义)
+  status      String       @default("ACTIVE") // 状态: ACTIVE, DISABLED
+  description String?
+  permissions Permission[]
+  admins      Admin[]
+  isDefault   Boolean      @default(false) // 是否为默认角色
+  sort        Int          @default(0) // 排序
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+}
+
+model Permission {
+  id          String       @id @default(cuid())
+  name        String       @unique
+  key         String       @unique // 权限标识符
+  description String?
+  parentId    String?
+  parent      Permission?  @relation("ParentChild", fields: [parentId], references: [id])
+  children    Permission[] @relation("ParentChild")
+  roles       Role[]
+  menus       Menu[]
+  sort        Int          @default(0) // 排序
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+}
+
+model Menu {
+  id          String       @id @default(cuid())
+  name        String
+  parentId    String? // 父菜单ID
+  sort        Int          @default(0) // 排序
+  url         String // 前端页面路由地址或接口地址
+  permissions Permission[]
+  icon        String? // 菜单图标
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+}

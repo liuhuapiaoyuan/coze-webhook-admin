@@ -1,0 +1,22 @@
+diff --git a/dist/index.mjs b/dist/index.mjs
+index f46ea5afe65e99731f941ac66ccdb8aea0fa5adf..13a2b203b61e0dcead6e7577b6ff915da907237c 100644
+--- a/dist/index.mjs
++++ b/dist/index.mjs
+@@ -426,7 +426,7 @@ var swagger = async ({
+   const app = new Elysia({ name: "@elysiajs/swagger" });
+   app.get(path, function documentation2() {
+     const combinedSwaggerOptions = {
+-      url: `/${relativePath}/json`,
++      url: `${relativePath}/json`,
+       dom_id: "#swagger-ui",
+       ...swaggerOptions
+     };
+@@ -440,7 +440,7 @@ var swagger = async ({
+     const scalarConfiguration = {
+       spec: {
+         ...scalarConfig.spec,
+-        url: `/${relativePath}/json`
++        url: `${relativePath}/json`
+       },
+       ...scalarConfig,
+       // so we can showcase the elysia theme

@@ -1,0 +1,9 @@
+version: "3"
+
+services:
+  ai-human:
+    image: liuhuapiaoyuan/ai-human
+    ports:
+      - "8124:3000"
+    env_file:
+      - ./.env
