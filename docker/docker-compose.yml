@@ -1,7 +1,7 @@
 version: "3"
 
 services:
-  ai-human:
+  coze-webhook:
     image: liuhuapiaoyuan/coze-webhook
     ports:
       - "8125:3000"

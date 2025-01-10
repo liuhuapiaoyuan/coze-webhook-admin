@@ -96,9 +96,9 @@ export const APP_MENUS: Array<{
 
 export const QuickActions = [
   {
-    title: "创建数字人",
+    title: "创建COZE",
     icon: Plus,
-    url: "/digital-humans/create",
+    url: "/admin/webhooks/new",
   },
   {
     title: "个人中心",
