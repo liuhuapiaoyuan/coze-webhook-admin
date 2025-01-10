@@ -14,7 +14,7 @@ export default async function RolesPage(props: PageProps) {
     <div className="container mx-auto py-10">
       <div className="mb-6 flex items-center justify-between">
         <h1 className="text-2xl font-bold">角色管理</h1>
-        <Link href="/roles/new">
+        <Link href="/admin/roles/new">
           <Button>
             <Plus className="mr-2 h-4 w-4" />
             新建角色
@@ -22,7 +22,7 @@ export default async function RolesPage(props: PageProps) {
         </Link>
       </div>
       <PageTable
-        basePath="/roles"
+        basePath="/admin/roles"
         load={RoleService.getRoles}
         columns={columns}
         searchParams={props.searchParams}

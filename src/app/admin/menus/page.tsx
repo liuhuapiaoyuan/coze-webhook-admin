@@ -16,7 +16,7 @@ export default async function MenuPage(props: PageProps) {
     <div className="container mx-auto py-10">
       <div className="mb-6 flex items-center justify-between">
         <h1 className="text-2xl font-bold">菜单管理</h1>
-        <Link href="/menus/new">
+        <Link href="/admin/menus/new">
           <Button>
             <Plus className="mr-2 h-4 w-4" />
             新建菜单
@@ -24,7 +24,7 @@ export default async function MenuPage(props: PageProps) {
         </Link>
       </div>
       <PageTable
-        basePath="/menus"
+        basePath="/admin/menus"
         load={getMenus}
         columns={columns}
         searchParams={props.searchParams}

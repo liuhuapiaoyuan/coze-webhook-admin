@@ -48,7 +48,7 @@ export function RoleForm({ initialData }: RoleFormProps) {
       } else {
         await createRole(data);
       }
-      router.push("/roles");
+      router.push("/admin/roles");
       router.refresh();
     } catch (error) {
       console.error("提交失败:", error);

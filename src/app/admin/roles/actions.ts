@@ -16,7 +16,7 @@ export async function createRole(data: {
 }) {
   try {
     await RoleService.createRole(data);
-    revalidatePath("/roles");
+    revalidatePath("/admin/roles");
     return { success: true };
   } catch (_error) {
     throw new Error("创建角色失败");
@@ -32,7 +32,7 @@ export async function updateRole(
 ) {
   try {
     await RoleService.updateRole(roleId, data);
-    revalidatePath("/roles");
+    revalidatePath("/admin/roles");
     return { success: true };
   } catch (_error) {
     throw new Error("更新角色失败");
@@ -42,7 +42,7 @@ export async function updateRole(
 export async function deleteRole(roleId: string) {
   try {
     await RoleService.deleteRole(roleId);
-    revalidatePath("/roles");
+    revalidatePath("/admin/roles");
     return { success: true };
   } catch (_error) {
     throw new Error("删除角色失败");

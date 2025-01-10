@@ -16,7 +16,7 @@ export default async function PermissionPage(props: PageProps) {
         <PermissionsDrawer />
       </div>
       <PageTable
-        basePath="/permissions"
+        basePath="/admin/permissions"
         load={PermissionService.getPermissions}
         columns={columns}
         searchParams={props.searchParams}

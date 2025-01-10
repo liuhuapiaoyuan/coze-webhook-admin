@@ -70,7 +70,7 @@ export function MenuForm({ initialData }: MenuFormProps) {
       } else {
         await createMenu(data);
       }
-      router.push("/menus");
+      router.push("/admin/menus");
       router.refresh();
     } catch (error) {
       toast({

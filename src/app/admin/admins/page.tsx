@@ -10,7 +10,7 @@ export default async function AdminsPage(props: PageProps) {
     <div className="container mx-auto py-10">
       <div className="mb-6 flex items-center justify-between">
         <h1 className="text-2xl font-bold">管理员管理</h1>
-        <Link href="/admins/new">
+        <Link href="admins/new">
           <Button>
             <Plus className="mr-2 h-4 w-4" />
             新建管理员
@@ -18,7 +18,7 @@ export default async function AdminsPage(props: PageProps) {
         </Link>
       </div>
       <PageTable
-        basePath="/admins"
+        basePath="/admin/admins"
         load={(data) =>
           getAdmins({
             page: data.page,

@@ -46,7 +46,7 @@ export function PermissionForm({ initialData }: PermissionFormProps) {
       } else {
         await createPermission(data);
       }
-      router.push("/permissions");
+      router.push("/admin/permissions");
       router.refresh();
     } catch (error) {
       toast({

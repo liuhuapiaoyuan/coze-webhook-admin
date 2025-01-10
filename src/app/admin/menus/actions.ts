@@ -24,7 +24,7 @@ export async function createMenu(data: {
     data.icon,
     data.permissionIds
   );
-  revalidatePath("/menus");
+  revalidatePath("/admin/menus");
   return { success: true };
 }
 
@@ -40,13 +40,13 @@ export async function updateMenu(
   }
 ) {
   await MenuService.updateMenu(menuId, data);
-  revalidatePath("/menus");
+  revalidatePath("/admin/menus");
   return { success: true };
 }
 
 export async function deleteMenu(menuId: string) {
   await MenuService.deleteMenu(menuId);
-  revalidatePath("/menus");
+  revalidatePath("/admin/menus");
   return { success: true };
 }
 

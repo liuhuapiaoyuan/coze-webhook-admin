@@ -38,7 +38,7 @@ const AdminActions = ({ admin }: { admin: Admin }) => {
           <Key className="mr-2 h-4 w-4" />
           重置密码
         </DropdownMenuItem>
-        <Link href={`/admins/${admin.id}`}>
+        <Link href={`admins/${admin.id}`}>
           <DropdownMenuItem>
             <Edit className="mr-2 h-4 w-4" />
             编辑信息

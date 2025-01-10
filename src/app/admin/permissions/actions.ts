@@ -19,7 +19,7 @@ export async function createPermission(data: {
     data.key,
     data.description
   );
-  revalidatePath("/permissions");
+  revalidatePath("/admin/permissions");
   return { success: true };
 }
 
@@ -32,13 +32,13 @@ export async function updatePermission(
   }
 ) {
   await PermissionService.updatePermission(permissionId, data);
-  revalidatePath("/permissions");
+  revalidatePath("/admin/permissions");
   return { success: true };
 }
 
 export async function deletePermission(permissionId: string) {
   await PermissionService.deletePermission(permissionId);
-  revalidatePath("/permissions");
+  revalidatePath("/admin/permissions");
   return { success: true };
 }
 
