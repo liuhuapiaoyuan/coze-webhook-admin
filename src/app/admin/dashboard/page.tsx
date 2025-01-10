@@ -10,6 +10,7 @@ import { Webhook, WebhookOff, Loader2 } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import { zhCN } from "date-fns/locale";
 import { Welcome } from "./_components/welcome";
+import Link from "next/link";
 
 async function getStats() {
   const [
@@ -78,70 +79,78 @@ export default async function DashboardPage() {
       <h1 className="mb-8 text-2xl font-bold">仪表盘</h1>
       <Welcome />
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Webhook总数</CardTitle>
-            <Webhook className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{stats.totalWebhooks}</div>
-          </CardContent>
-        </Card>
+        <Link href="/admin/webhooks" className="block">
+          <Card className="transition-shadow hover:shadow-lg">
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">Webhook总数</CardTitle>
+              <Webhook className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">{stats.totalWebhooks}</div>
+            </CardContent>
+          </Card>
+        </Link>
 
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">API端点总数</CardTitle>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              className="h-4 w-4 text-muted-foreground"
-            >
-              <path d="M4 21v-7a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v7" />
-              <path d="M7 21h10" />
-              <path d="M12 17v-6" />
-              <path d="M12 7a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" />
-            </svg>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{stats.totalApiEndpoints}</div>
-          </CardContent>
-        </Card>
+        <Link href="/admin/api-endpoints" className="block">
+          <Card className="transition-shadow hover:shadow-lg">
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">API端点总数</CardTitle>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                className="h-4 w-4 text-muted-foreground"
+              >
+                <path d="M4 21v-7a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v7" />
+                <path d="M7 21h10" />
+                <path d="M12 17v-6" />
+                <path d="M12 7a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" />
+              </svg>
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">{stats.totalApiEndpoints}</div>
+            </CardContent>
+          </Card>
+        </Link>
 
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">API密钥总数</CardTitle>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              className="h-4 w-4 text-muted-foreground"
-            >
-              <path d="M15 6v12a3 3 0 1 0 3-3H6a3 3 0 1 0 3 3V6a3 3 0 1 0-3 3h12a3 3 0 1 0-3-3" />
-            </svg>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{stats.totalApiKeys}</div>
-          </CardContent>
-        </Card>
+        <Link href="/admin/api-keys" className="block">
+          <Card className="transition-shadow hover:shadow-lg">
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">API密钥总数</CardTitle>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                className="h-4 w-4 text-muted-foreground"
+              >
+                <path d="M15 6v12a3 3 0 1 0 3-3H6a3 3 0 1 0 3 3V6a3 3 0 1 0-3 3h12a3 3 0 1 0-3-3" />
+              </svg>
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">{stats.totalApiKeys}</div>
+            </CardContent>
+          </Card>
+        </Link>
 
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">平均响应时间</CardTitle>
-            <Loader2 className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{stats.avgDuration}ms</div>
-          </CardContent>
-        </Card>
+        <Link href="/admin/api-logs" className="block">
+          <Card className="transition-shadow hover:shadow-lg">
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">平均响应时间</CardTitle>
+              <Loader2 className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">{stats.avgDuration}ms</div>
+            </CardContent>
+          </Card>
+        </Link>
       </div>
 
       <div className="mt-4 grid gap-4 md:grid-cols-2 lg:grid-cols-7">
