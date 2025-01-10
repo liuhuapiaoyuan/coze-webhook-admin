@@ -60,6 +60,21 @@ export const columns: ColumnDef<ApiLogWithRelations>[] = [
     },
   },
   {
+    accessorKey: "status",
+    header: "状态",
+    cell: ({ row }) => {
+      return (
+        <span
+          className={
+            row.original.status === "failed" ? "text-red-600" : "text-green-600"
+          }
+        >
+          {row.original.status}
+        </span>
+      );
+    },
+  },
+  {
     accessorKey: "duration",
     header: "耗时",
     cell: ({ row }) => {
