@@ -78,4 +78,22 @@ export class ApiEndpointsService {
       },
     };
   }
+
+  //   将所有创建时间在1小时前，并且duration:null的api-logs 都标记为失败
+  static async markFailedLogs() {
+    const oneHourAgo = new Date();
+    oneHourAgo.setHours(oneHourAgo.getHours() - 1);
+    await db.apiEndpointLog.updateMany({
+      where: {
+        createdAt: {
+          lt: oneHourAgo,
+        },
+        duration: null,
+      },
+      data: {
+        duration: 0,
+        status: "failed",
+      },
+    });
+  }
 }

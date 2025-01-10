@@ -10,7 +10,7 @@
     "lint": "next lint",
     "db:push": "prisma db push",
     "db:reset": "prisma db reset",
-    "db:migrate": "prisma migrate dev --name init",
+    "db:migrate": "prisma migrate dev ",
     "db:deploy": "prisma migrate deploy",
     "db:generate": "prisma generate",
     "db:studio": "prisma studio",

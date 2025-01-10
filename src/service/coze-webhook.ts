@@ -137,6 +137,7 @@ export class CozeWebhook {
       data: {
         duration: Date.now() - hook.start,
         response: data,
+        status: "success",
       },
       where: {
         id: hook.logId,

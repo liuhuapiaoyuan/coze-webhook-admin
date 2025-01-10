@@ -109,6 +109,8 @@ model ApiEndpointLog {
   apiEndpointId   String
   cozeWebhook     CozeWebhook @relation(fields: [cozeWebhookId], references: [id])
   ip              String?
+  //status wait|failed|success
+  status          String    @default("wait")
   cozeWebhookId   String
   requestParams   String      // JSON string of request parameters
   response        String?      // JSON string of response
