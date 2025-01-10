@@ -25,7 +25,7 @@ export const APP_MENUS: Array<{
 }> = [
   {
     id: "biz",
-    title: "数字人系统",
+    title: "接口服务",
     items: [
       {
         title: "工作台",
@@ -103,6 +103,6 @@ export const QuickActions = [
   {
     title: "个人中心",
     icon: User,
-    url: "/profile",
+    url: "/admin/profile",
   },
 ];

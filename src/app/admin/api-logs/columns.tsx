@@ -20,7 +20,7 @@ export const columns: ColumnDef<ApiLogWithRelations>[] = [
       const apiEndpoint = row.original.apiEndpoint;
       return (
         <div>
-          <Link 
+          <Link
             href={`/api-endpoints/${apiEndpoint.id}`}
             className="text-blue-600 hover:underline"
           >
@@ -39,11 +39,11 @@ export const columns: ColumnDef<ApiLogWithRelations>[] = [
     cell: ({ row }) => {
       const webhook = row.original.cozeWebhook;
       return (
-        <Link 
+        <Link
           href={`/webhooks/${webhook.id}`}
           className="text-blue-600 hover:underline"
         >
-          {webhook.url}
+          {webhook.name}
         </Link>
       );
     },
@@ -64,8 +64,13 @@ export const columns: ColumnDef<ApiLogWithRelations>[] = [
     header: "耗时",
     cell: ({ row }) => {
       const duration = row.original.duration;
+      if (duration == null) {
+        return <span className="text-muted-foreground">--ms</span>;
+      }
       return (
-        <span className={duration > 1000 ? "text-yellow-600" : "text-green-600"}>
+        <span
+          className={duration > 1000 ? "text-yellow-600" : "text-green-600"}
+        >
           {duration}ms
         </span>
       );
@@ -83,7 +88,7 @@ export const columns: ColumnDef<ApiLogWithRelations>[] = [
     cell: ({ row }) => {
       const log = row.original;
       return (
-        <Link href={`/api-logs/${log.id}`}>
+        <Link href={`api-logs/${log.id}`}>
           <Button className="h-8 py-0" variant={"ghost"}>
             查看详情
             <Eye className="ml-2 h-4 w-4" />

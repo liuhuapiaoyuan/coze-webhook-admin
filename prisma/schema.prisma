@@ -88,7 +88,6 @@ model ApiEndpoint {
   cozeWebhookId  String
   type           String           // openaiLike or request
   name           String
-  path           String
   description    String?
   apiKeys        ApiKey[]
   logs           ApiEndpointLog[]
@@ -109,10 +108,11 @@ model ApiEndpointLog {
   apiEndpoint     ApiEndpoint @relation(fields: [apiEndpointId], references: [id])
   apiEndpointId   String
   cozeWebhook     CozeWebhook @relation(fields: [cozeWebhookId], references: [id])
+  ip              String?
   cozeWebhookId   String
   requestParams   String      // JSON string of request parameters
-  response        String      // JSON string of response
-  duration        Int         // Duration in milliseconds
-  apiKey          String      // The API key used for this request
+  response        String?      // JSON string of response
+  duration        Int?         // Duration in milliseconds
+  apiKey          String?      // The API key used for this request
   createdAt       DateTime    @default(now())
 }

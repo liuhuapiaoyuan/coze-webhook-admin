@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/table";
 
 import { SmartPagination } from "./smart-pagination";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export type { ColumnDef } from "@tanstack/react-table";
 /**
@@ -42,6 +43,8 @@ interface DataTableProps<TData, TValue> {
   onPagination?: (pageIndex: number, pageSize: number) => void;
   /** 可选的每页显示行数选项（可选） */
   pageSizeOptions?: number[];
+  /** 加载状态（可选） */
+  loading?: boolean;
 }
 
 export function DataTable<TData, TValue>({
@@ -54,6 +57,7 @@ export function DataTable<TData, TValue>({
   pageNumber: pageNumber = 1,
   pageSize = 10,
   pageSizeOptions = [10, 20, 30, 50],
+  loading = false,
 }: DataTableProps<TData, TValue>) {
   const table = useReactTable({
     data,
@@ -84,32 +88,42 @@ export function DataTable<TData, TValue>({
             ))}
           </TableHeader>
           <TableBody>
-            {table.getRowModel().rows?.length
-              ? table.getRowModel().rows.map((row) => (
-                  <TableRow
-                    key={row.id}
-                    data-state={row.getIsSelected() && "selected"}
-                  >
-                    {row.getVisibleCells().map((cell) => (
-                      <TableCell key={cell.id}>
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext()
-                        )}
+            {loading
+              ? Array.from({ length: 5 }).map((_, index) => (
+                  <TableRow key={index}>
+                    {columns.map((_, cellIndex) => (
+                      <TableCell key={cellIndex}>
+                        <Skeleton className="h-6 w-full" />
                       </TableCell>
                     ))}
                   </TableRow>
                 ))
-              : (empty ?? (
-                  <TableRow>
-                    <TableCell
-                      colSpan={columns.length}
-                      className="h-24 text-center"
+              : table.getRowModel().rows?.length
+                ? table.getRowModel().rows.map((row) => (
+                    <TableRow
+                      key={row.id}
+                      data-state={row.getIsSelected() && "selected"}
                     >
-                      {emptyMessage}
-                    </TableCell>
-                  </TableRow>
-                ))}
+                      {row.getVisibleCells().map((cell) => (
+                        <TableCell key={cell.id}>
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext()
+                          )}
+                        </TableCell>
+                      ))}
+                    </TableRow>
+                  ))
+                : (empty ?? (
+                    <TableRow>
+                      <TableCell
+                        colSpan={columns.length}
+                        className="h-24 text-center"
+                      >
+                        {emptyMessage}
+                      </TableCell>
+                    </TableRow>
+                  ))}
           </TableBody>
         </Table>
       </div>

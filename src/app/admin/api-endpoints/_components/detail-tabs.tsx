@@ -1,6 +1,9 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ApiEndpoint } from "@prisma/client";
+import { KeysList } from "./keys-list";
+import { RecordsList } from "./records-list";
+import { Suspense } from "react";
 
 interface DetailTabsProps {
   apiEndpoint: ApiEndpoint & {
@@ -19,22 +22,52 @@ export function DetailTabs({ apiEndpoint }: DetailTabsProps) {
       <TabsContent value="method">
         <Card>
           <CardContent className="pt-6">
-            <pre className="rounded bg-slate-950 p-4 text-sm text-slate-50">
-              {`curl -X POST \\
+            {apiEndpoint.type === "openaiLike" && (
+              <pre className="rounded bg-slate-950 p-4 text-sm text-slate-50">
+                {`curl -X POST \\
 ${process.env.NEXT_PUBLIC_API_URL}${apiEndpoint.path} \\
--H "Authorization: Bearer YOUR_API_KEY"`}
-            </pre>
+-H "Content-Type: application/json" \\
+-H "Authorization: Bearer <YOUR_API_KEY>" \\
+-d '{
+      "model": "${apiEndpoint.id}",
+      "messages": [
+        {"role": "system", "content": "You are a helpful assistant."},
+        {"role": "user", "content": "Hello!"}
+      ],
+      "stream": false
+    }'
+`}
+              </pre>
+            )}
+            {apiEndpoint.type === "request" && (
+              <pre className="rounded bg-slate-950 p-4 text-sm text-slate-50">
+                {`curl -X POST \\
+${process.env.NEXT_PUBLIC_API_URL}${apiEndpoint.path} \\
+-H "Content-Type: application/json" \\
+-H "Authorization: Bearer <YOUR_API_KEY>" \\
+-d '{ "foo": "bar" }'
+`}
+              </pre>
+            )}
           </CardContent>
         </Card>
       </TabsContent>
       <TabsContent value="records">
         <Card>
-          <CardContent className="pt-6">调用记录列表</CardContent>
+          <CardContent className="pt-6">
+            <Suspense fallback={<div>Loading...</div>}>
+              <RecordsList endpointId={apiEndpoint.id} />
+            </Suspense>
+          </CardContent>
         </Card>
       </TabsContent>
       <TabsContent value="keys">
         <Card>
-          <CardContent className="pt-6">可用的API密钥列表</CardContent>
+          <CardContent className="pt-6">
+            <Suspense fallback={<div>Loading...</div>}>
+              <KeysList endpointId={apiEndpoint.id} />
+            </Suspense>
+          </CardContent>
         </Card>
       </TabsContent>
     </Tabs>

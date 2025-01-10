@@ -10,7 +10,9 @@ interface ApiLogDetailPageProps {
   };
 }
 
-export default async function ApiLogDetailPage({ params }: ApiLogDetailPageProps) {
+export default async function ApiLogDetailPage({
+  params,
+}: ApiLogDetailPageProps) {
   const log = await getApiLog(params.id);
 
   if (!log) {
@@ -32,25 +34,29 @@ export default async function ApiLogDetailPage({ params }: ApiLogDetailPageProps
               <div>
                 <dt className="text-sm font-medium text-gray-500">API端点</dt>
                 <dd className="mt-1">
-                  <Link 
+                  <Link
                     href={`/api-endpoints/${log.apiEndpoint.id}`}
                     className="text-blue-600 hover:underline"
                   >
                     {log.apiEndpoint.name}
                   </Link>
                   <Badge variant="outline" className="ml-2">
-                    {log.apiEndpoint.type === "openaiLike" ? "OpenAI兼容" : "普通请求"}
+                    {log.apiEndpoint.type === "openaiLike"
+                      ? "OpenAI兼容"
+                      : "普通请求"}
                   </Badge>
                 </dd>
               </div>
               <div>
-                <dt className="text-sm font-medium text-gray-500">Webhook</dt>
+                <dt className="text-sm font-medium text-gray-500">
+                  CozeWebhook
+                </dt>
                 <dd className="mt-1">
-                  <Link 
+                  <Link
                     href={`/webhooks/${log.cozeWebhook.id}`}
                     className="text-blue-600 hover:underline"
                   >
-                    {log.cozeWebhook.url}
+                    {log.cozeWebhook.name}
                   </Link>
                 </dd>
               </div>
@@ -71,7 +77,11 @@ export default async function ApiLogDetailPage({ params }: ApiLogDetailPageProps
               <div>
                 <dt className="text-sm font-medium text-gray-500">耗时</dt>
                 <dd className="mt-1">
-                  <span className={log.duration > 1000 ? "text-yellow-600" : "text-green-600"}>
+                  <span
+                    className={
+                      log.duration > 1000 ? "text-yellow-600" : "text-green-600"
+                    }
+                  >
                     {log.duration}ms
                   </span>
                 </dd>

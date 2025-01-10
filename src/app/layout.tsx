@@ -13,8 +13,8 @@ declare global {
 }
 
 export const metadata: Metadata = {
-  title: "数字人后台管理系统",
-  description: "Admin dashboard for digital human management",
+  title: "扣子服务管理系统",
+  description: "一键管理扣子webhook服务",
 };
 
 export default function RootLayout({

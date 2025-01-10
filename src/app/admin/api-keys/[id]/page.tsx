@@ -3,14 +3,15 @@ import { ApiKeyForm } from "../_components/form";
 import { getApiKey, getApiEndpointOptions } from "../actions";
 
 interface EditApiKeyPageProps {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
 export default async function EditApiKeyPage({ params }: EditApiKeyPageProps) {
+  const { id } = await params;
   const [apiKey, apiEndpointOptions] = await Promise.all([
-    getApiKey(params.id),
+    getApiKey(id),
     getApiEndpointOptions(),
   ]);
 
@@ -24,8 +25,8 @@ export default async function EditApiKeyPage({ params }: EditApiKeyPageProps) {
         <h1 className="text-2xl font-bold">编辑API密钥</h1>
       </div>
       <div className="rounded-md border p-4">
-        <ApiKeyForm 
-          initialData={apiKey} 
+        <ApiKeyForm
+          initialData={apiKey}
           apiEndpointOptions={apiEndpointOptions}
         />
       </div>

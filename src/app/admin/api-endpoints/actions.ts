@@ -96,3 +96,72 @@ export async function getWebhookOptions() {
     },
   });
 }
+
+// 获取API端点密钥列表
+export async function getEndpointKeys(
+  endpointId: string,
+  query: PageableQuery<typeof db.apiKey> = { page: 1, pageSize: 10 }
+) {
+  const skip = (query.page - 1) * query.pageSize;
+  const [total, data] = await Promise.all([
+    db.apiKey.count({
+      where: {
+        apiEndpoints: {
+          some: {
+            id: endpointId,
+          },
+        },
+        ...query.where,
+      },
+    }),
+    db.apiKey.findMany({
+      skip,
+      take: query.pageSize,
+      where: {
+        apiEndpoints: {
+          some: {
+            id: endpointId,
+          },
+        },
+        ...query.where,
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+    }),
+  ]);
+
+  return {
+    data,
+    total,
+    page: query.page,
+    pageSize: query.pageSize,
+    totalPages: Math.ceil(total / query.pageSize),
+  };
+}
+
+// 获取API端点调用记录
+export async function getEndpointRecords(
+  endpointId: string,
+  query: { page: number; pageSize: number }
+) {
+  const skip = (query.page - 1) * query.pageSize;
+  const [total, data] = await Promise.all([
+    db.apiEndpointLog.count({
+      where: { apiEndpointId: endpointId },
+    }),
+    db.apiEndpointLog.findMany({
+      where: { apiEndpointId: endpointId },
+      skip,
+      take: query.pageSize,
+      orderBy: {
+        createdAt: "desc",
+      },
+    }),
+  ]);
+
+  return {
+    data,
+    total,
+  };
+}

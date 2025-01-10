@@ -1,4 +1,5 @@
 import { db } from "@/lib/db";
+import { CozeWebhook } from "./coze-webhook";
 
 export class ApiEndpointsService {
   /**
@@ -27,6 +28,54 @@ export class ApiEndpointsService {
     return {
       ...apiEndpoint,
       path,
+    };
+  }
+
+  /**
+   * 获得coze的操作
+   * @param apiKey
+   * @param id
+   * @returns
+   */
+  static async getClient(apiKey: string, id: string) {
+    const apiKeys = await db.apiKey.findFirst({
+      where: {
+        key: apiKey,
+        apiEndpoints: {
+          some: {
+            id,
+          },
+        },
+      },
+      include: {
+        apiEndpoints: {
+          include: {
+            cozeWebhook: true,
+          },
+        },
+      },
+    });
+
+    if (!apiKeys) {
+      throw new Error("API key not found");
+    }
+    const apiEndpoint = apiKeys.apiEndpoints.find((item) => item.id === id);
+
+    if (!apiEndpoint) {
+      throw new Error("API endpoint not found");
+    }
+    const coze = new CozeWebhook(apiEndpoint.cozeWebhook);
+
+    return {
+      coze,
+      /**
+       * 发送
+       * @param data
+       * @returns
+       */
+      send: (data: Record<string, string>) => {
+        return coze.send(apiEndpoint.id, apiKey, data);
+      },
     };
   }
 }

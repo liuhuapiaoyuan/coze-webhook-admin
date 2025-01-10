@@ -30,6 +30,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { redirect } from "next/navigation";
 import { QuickLink } from "./quick-link";
 import { APP_MENUS } from "./app-actions";
+import Image from "next/image";
 
 export async function AppSidebar() {
   const session = await auth();
@@ -43,11 +44,17 @@ export async function AppSidebar() {
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" asChild>
               <Link href="/dashboard">
-                <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
-                  <Command className="size-4" />
+                <div className="flex aspect-square size-8 items-center justify-center overflow-hidden rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
+                  <Image
+                    src="/coze.png"
+                    alt="COZE"
+                    width={124}
+                    height={124}
+                    className="size-full"
+                  />
                 </div>
-                <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-semibold">数字人</span>
+                <div className=" grid flex-1 text-left text-sm leading-tight group-[&[data-state=collapsed]]:hidden ">
+                  <span className="truncate font-semibold">COZE服务</span>
                   <span className="truncate text-xs">后台管理系统</span>
                 </div>
               </Link>
@@ -128,7 +135,7 @@ export async function AppSidebar() {
               <DropdownMenuItem
                 onClick={async () => {
                   "use server";
-                  redirect("/profile");
+                  redirect("/admin/profile");
                 }}
               >
                 <BadgeCheck />

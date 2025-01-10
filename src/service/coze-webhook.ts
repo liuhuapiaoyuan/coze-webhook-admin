@@ -1,12 +1,46 @@
 import { MemoryCache } from "@/lib/cache";
+import { db } from "@/lib/db";
 import { v4 as uuidv4 } from "uuid";
-
-const WebhookCache = new MemoryCache<{
+type CozeCache = {
+  logId: string;
   start: number;
-  end?: number;
   data?: string;
   status: "success" | "wait";
-}>();
+};
+declare global {
+  // eslint-disable-next-line no-var
+  var WebhookCache: MemoryCache<CozeCache>;
+}
+
+let WebhookCache: MemoryCache<CozeCache>;
+if (process.env.NODE_ENV === "production") {
+  WebhookCache = new MemoryCache<CozeCache>();
+} else {
+  if (!global.WebhookCache) {
+    global.WebhookCache = new MemoryCache<CozeCache>();
+  }
+  WebhookCache = global.WebhookCache;
+}
+
+export class CozeWebhookService {
+  static async getClient(id: string) {
+    const webhook = await db.cozeWebhook.findUnique({
+      where: {
+        id,
+      },
+    });
+
+    if (!webhook) {
+      throw new CozeWebhookError("webhook not found");
+    }
+
+    return new CozeWebhook({
+      url: webhook.url,
+      id: webhook.id,
+      authorization: webhook.authorization,
+    });
+  }
+}
 
 class CozeWebhookError extends Error {
   constructor(message: string) {
@@ -39,14 +73,25 @@ export class CozeWebhook {
   }
 
   //   转发给coze
-  async send(data: Record<string, string>) {
-    // 调用成功就创建缓存
+  async send(
+    apiEndpointId: string,
+    apiKey: string,
+    data: Record<string, string>
+  ) {
     const hookId = uuidv4();
+    const log = await db.apiEndpointLog.create({
+      data: {
+        apiEndpointId: apiEndpointId,
+        cozeWebhookId: this.id,
+        requestParams: JSON.stringify(data),
+        apiKey: apiKey,
+      },
+    });
     const response = await fetch(this.url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: this.authorization,
+        Authorization: `Bearer ${this.authorization}`,
       },
       body: JSON.stringify({
         ...data,
@@ -63,9 +108,11 @@ export class CozeWebhook {
     }
 
     await WebhookCache.set(hookId, {
+      logId: log.id,
       start: Date.now(),
       status: "success",
     });
+
     return {
       hookId,
       data: result,
@@ -85,12 +132,22 @@ export class CozeWebhook {
     if (!hook) {
       throw new CozeWebhookError("hook not found");
     }
+
+    await db.apiEndpointLog.update({
+      data: {
+        duration: Date.now() - hook.start,
+        response: data,
+      },
+      where: {
+        id: hook.logId,
+      },
+    });
+
     await WebhookCache.update(
       hookId,
       {
         data,
         status: "success",
-        end: Date.now(),
       },
       60 * 1000
     );

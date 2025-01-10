@@ -8,7 +8,7 @@ export async function updateProfile({ nickname }: { nickname: string }) {
   if (!session?.user?.id) return;
   const adminId = session.user.id;
   await AdminService.changeNickname(adminId, nickname);
-  revalidatePath("/profile");
+  revalidatePath("/admin/profile");
   return { success: true };
 }
 

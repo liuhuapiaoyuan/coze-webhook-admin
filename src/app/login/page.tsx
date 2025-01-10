@@ -11,11 +11,11 @@ export default function LoginPage() {
             <div className="flex h-6 w-6 items-center justify-center rounded-md bg-primary text-primary-foreground">
               <GalleryVerticalEnd className="size-4" />
             </div>
-            数字人管理系统
+            扣子Hook服务
           </a>
         </div>
         <div className="flex flex-1 items-center justify-center">
-          <div className="max-w-full w-[500px]">
+          <div className="w-[500px] max-w-full">
             <LoginForm />
           </div>
         </div>
