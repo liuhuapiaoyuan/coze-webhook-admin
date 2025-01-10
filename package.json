@@ -12,6 +12,7 @@
     "db:migrate": "prisma migrate dev --name init",
     "db:generate": "prisma generate",
     "db:studio": "prisma studio",
+    "repomix": "repomix",
     "ui:add": "pnpm dlx shadcn@latest add"
   },
   "dependencies": {
@@ -58,6 +59,7 @@
     "react-dom": "^19.0.0",
     "react-hook-form": "^7.54.2",
     "recharts": "^2.15.0",
+    "repomix": "^0.2.17",
     "tailwind-merge": "^2.6.0",
     "tailwindcss-animate": "^1.0.7",
     "text-search-engine": "^1.4.2",
