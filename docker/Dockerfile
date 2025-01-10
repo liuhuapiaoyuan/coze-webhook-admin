@@ -9,6 +9,8 @@ WORKDIR /app
 FROM base AS builder
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
 COPY  ./next.docker.ts  ./next.config.ts
+
+RUN pnpm run db:generate
 RUN pnpm run build
 
 
@@ -18,6 +20,7 @@ FROM base as runtime
 WORKDIR /app
 
 ENV NODE_ENV=production
+ENV DATABASE_URL="file:/config/db.sqlite"
 
 RUN addgroup -g 1001 -S nodejs
 RUN adduser -S nextjs -u 1001
@@ -27,12 +30,17 @@ COPY --from=builder /app/public ./public
 # https://nextjs.org/docs/advanced-features/output-file-tracing
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+COPY --from=builder --chown=nextjs:nodejs /app/prisma ./prisma
+COPY --from=builder --chown=nextjs:nodejs /app/node_modules/.bin/prisma ./node_modules/.bin/prisma
+COPY --from=builder --chown=nextjs:nodejs /app/node_modules/prisma ./node_modules/prisma
+COPY --from=builder --chown=nextjs:nodejs /app/node_modules/@prisma ./node_modules/@prisma
 
  
 
 
 EXPOSE 3000
 ENV PORT 3000
+ENV HOST 0.0.0.0
 
 
 CMD ["node", "server.js"]

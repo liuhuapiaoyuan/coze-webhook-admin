@@ -2,4 +2,11 @@
 # Example:
 # *.log
 # tmp/
-src/components/ui/*
+src/components/*
+.cursorrules
+.windsurfrules
+
+admins/*
+roles/*
+tsconfig.json
+tailwind.config.ts

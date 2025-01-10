@@ -22,9 +22,11 @@ trap 'error_handler $LINENO' ERR
 
 
 VERSION=$(date +%Y%m%d%H%M)
-BACK_IMAGE_NAME=liuhuapiaoyuan/ai-human
+BACK_IMAGE_NAME=liuhuapiaoyuan/coze-webhook
 # 编译后端
 echo "Building backend..."
+export DOCKER_BUILDKIT=1
+
 docker build -f ./docker/Dockerfile  -t $BACK_IMAGE_NAME:latest -t $BACK_IMAGE_NAME:$VERSION .
  
 echo "Build complete."
