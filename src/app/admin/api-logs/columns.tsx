@@ -21,7 +21,7 @@ export const columns: ColumnDef<ApiLogWithRelations>[] = [
       return (
         <div>
           <Link
-            href={`/api-endpoints/${apiEndpoint.id}`}
+            href={`/admin/api-endpoints/${apiEndpoint.id}/detail`}
             className="text-blue-600 hover:underline"
           >
             {apiEndpoint.name}
@@ -40,7 +40,7 @@ export const columns: ColumnDef<ApiLogWithRelations>[] = [
       const webhook = row.original.cozeWebhook;
       return (
         <Link
-          href={`/webhooks/${webhook.id}`}
+          href={`/admin/webhooks/${webhook.id}`}
           className="text-blue-600 hover:underline"
         >
           {webhook.name}
@@ -88,7 +88,7 @@ export const columns: ColumnDef<ApiLogWithRelations>[] = [
     cell: ({ row }) => {
       const log = row.original;
       return (
-        <Link href={`api-logs/${log.id}`}>
+        <Link href={`/admin/api-logs/${log.id}`}>
           <Button className="h-8 py-0" variant={"ghost"}>
             查看详情
             <Eye className="ml-2 h-4 w-4" />

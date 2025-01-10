@@ -6,6 +6,7 @@ import { formatDateTime } from "@/lib/utils";
 import { getEndpointRecords } from "../actions";
 import { useEffect, useState } from "react";
 import { ApiEndpointLog } from "@prisma/client";
+import Link from "next/link";
 
 interface RecordsListProps {
   endpointId: string;
@@ -15,14 +16,14 @@ const columns: ColumnDef<ApiEndpointLog>[] = [
   {
     accessorKey: "id",
     header: "ID",
-  },
-  {
-    accessorKey: "method",
-    header: "请求方法",
-  },
-  {
-    accessorKey: "status",
-    header: "状态码",
+    cell: ({ row }) => (
+      <Link
+        href={`/admin/api-logs/${row.original.id}`}
+        className="text-blue-600 hover:underline"
+      >
+        {row.original.id}
+      </Link>
+    ),
   },
   {
     accessorKey: "ip",

@@ -6,6 +6,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { formatDateTime } from "@/lib/utils";
 import { getEndpointKeys } from "../actions";
 import { useEffect, useState } from "react";
+import { CopyButton } from "./copy-button";
 
 interface KeysListProps {
   endpointId: string;
@@ -15,6 +16,17 @@ const columns: ColumnDef<ApiKey>[] = [
   {
     accessorKey: "key",
     header: "密钥",
+    cell: ({ row }) => {
+      const key = row.original.key;
+      const maskedKey = `${key.slice(0, 6)}${"*".repeat(20)}${key.slice(-4)}`;
+
+      return (
+        <div className="flex items-center gap-2">
+          <span className="font-mono">{maskedKey}</span>
+          <CopyButton value={key} className="h-8 w-8" />
+        </div>
+      );
+    },
   },
   {
     accessorKey: "name",

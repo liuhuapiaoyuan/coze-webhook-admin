@@ -1,8 +1,9 @@
 import { ApiEndpointsService } from "@/service/api-endpoints.service";
 import { chatCompletionSchema } from "./schema";
 import { v4 as uuidv4 } from "uuid";
+import { NextRequest } from "next/server";
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   const json = await request.json();
   const apiKey = request.headers.get("Authorization");
   if (!apiKey) {

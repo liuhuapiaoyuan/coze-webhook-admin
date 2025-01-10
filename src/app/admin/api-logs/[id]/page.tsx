@@ -36,7 +36,7 @@ export default async function ApiLogDetailPage({
                 <dt className="text-sm font-medium text-gray-500">API端点</dt>
                 <dd className="mt-1">
                   <Link
-                    href={`/api-endpoints/${log.apiEndpoint.id}`}
+                    href={`/admin/api-endpoints/${log.apiEndpoint.id}/detail`}
                     className="text-blue-600 hover:underline"
                   >
                     {log.apiEndpoint.name}
@@ -54,7 +54,7 @@ export default async function ApiLogDetailPage({
                 </dt>
                 <dd className="mt-1">
                   <Link
-                    href={`/webhooks/${log.cozeWebhook.id}`}
+                    href={`/admin/webhooks/${log.cozeWebhook.id}`}
                     className="text-blue-600 hover:underline"
                   >
                     {log.cozeWebhook.name}
