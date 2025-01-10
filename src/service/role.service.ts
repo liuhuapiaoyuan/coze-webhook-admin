@@ -44,7 +44,7 @@ export class RoleService {
   static async createRole(data: {
     name: string;
     code: string;
-    description?: string;
+    description: string | null;
     permissions?: string[];
   }) {
     return db.role.create({
@@ -64,7 +64,7 @@ export class RoleService {
     id: string,
     data: {
       name?: string;
-      description?: string;
+      description: string | null;
       permissions?: string[];
     }
   ) {

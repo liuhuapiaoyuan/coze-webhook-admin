@@ -9,6 +9,7 @@ import {
 import { Webhook, WebhookOff, Loader2 } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import { zhCN } from "date-fns/locale";
+import { Welcome } from "./_components/welcome";
 
 async function getStats() {
   const [
@@ -75,7 +76,7 @@ export default async function DashboardPage() {
   return (
     <div className="container mx-auto py-10">
       <h1 className="mb-8 text-2xl font-bold">仪表盘</h1>
-
+      <Welcome />
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -167,7 +168,7 @@ export default async function DashboardPage() {
                       耗时：{log.duration}ms
                     </p>
                   </div>
-                  {log.duration > 1000 && (
+                  {(log.duration ?? 999999) > 3000 && (
                     <WebhookOff className="ml-auto h-4 w-4 text-yellow-500" />
                   )}
                 </div>

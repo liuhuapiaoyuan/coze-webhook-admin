@@ -20,7 +20,8 @@ import { createRole, updateRole } from "../actions";
 
 const roleFormSchema = z.object({
   name: z.string().min(1, "角色名称不能为空"),
-  description: z.string().optional(),
+  code: z.string().min(1, "角色代码不能为空"),
+  description: z.string().nullable(),
 });
 
 type RoleFormValues = z.infer<typeof roleFormSchema>;
@@ -35,6 +36,7 @@ export function RoleForm({ initialData }: RoleFormProps) {
     resolver: zodResolver(roleFormSchema),
     defaultValues: initialData || {
       name: "",
+      code: "",
       description: "",
     },
   });
@@ -71,12 +73,29 @@ export function RoleForm({ initialData }: RoleFormProps) {
         />
         <FormField
           control={form.control}
+          name="code"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>角色代码</FormLabel>
+              <FormControl>
+                <Input placeholder="请输入角色代码" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
           name="description"
           render={({ field }) => (
             <FormItem>
               <FormLabel>描述</FormLabel>
               <FormControl>
-                <Textarea placeholder="请输入角色描述" {...field} />
+                <Textarea
+                  placeholder="请输入角色描述"
+                  {...field}
+                  value={field.value ?? ""}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>

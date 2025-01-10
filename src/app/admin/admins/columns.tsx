@@ -104,7 +104,7 @@ export const columns: ColumnDef<Admin>[] = [
     header: "角色",
     cell: ({ row }) => {
       const admin = row.original;
-      return ADMIN_ROLE_NAME[admin.role as ADMIN_ROLE];
+      return ADMIN_ROLE_NAME[admin.type as ADMIN_ROLE];
     },
   },
   {

@@ -138,7 +138,7 @@ export function ProfileForm(props: { user: Admin }) {
               </div>
               <p className="text-sm text-muted-foreground">{user.email}</p>
               <p className="text-sm text-muted-foreground">
-                角色: {ADMIN_ROLE_NAME[user.role as ADMIN_ROLE]}
+                角色: {ADMIN_ROLE_NAME[user.type as ADMIN_ROLE]}
               </p>
             </div>
           </div>

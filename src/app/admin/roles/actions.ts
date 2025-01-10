@@ -9,7 +9,11 @@ export async function getRoles(
   return RoleService.getRoles(...args);
 }
 
-export async function createRole(data: { name: string; description?: string }) {
+export async function createRole(data: {
+  name: string;
+  code: string;
+  description: null | string;
+}) {
   try {
     await RoleService.createRole(data);
     revalidatePath("/roles");
@@ -23,7 +27,7 @@ export async function updateRole(
   roleId: string,
   data: {
     name?: string;
-    description?: string;
+    description: string | null;
   }
 ) {
   try {
