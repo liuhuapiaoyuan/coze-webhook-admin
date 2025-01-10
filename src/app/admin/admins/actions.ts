@@ -29,11 +29,11 @@ export async function createAdmin(data: {
   username: string;
   nickname?: string;
   phone?: string;
-  role?: ADMIN_ROLE;
+  type?: ADMIN_ROLE;
 }) {
   await AdminService.createAdmin(data.email, data.username, data.password, {
     nickname: data.nickname,
-    role: data.role,
+    type: data.type,
     phone: data.phone,
   });
   revalidatePath("/admins");
@@ -48,7 +48,7 @@ export async function updateAdmin(
     username?: string;
     nickname?: string;
     phone?: string;
-    role?: ADMIN_ROLE;
+    type?: ADMIN_ROLE;
   }
 ) {
   await AdminService.updateAdmin(adminId, data);

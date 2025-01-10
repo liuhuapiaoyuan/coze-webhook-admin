@@ -17,6 +17,13 @@ import { useRouter } from "next/navigation";
 import { createAdmin, updateAdmin } from "../actions";
 import { Admin } from "@prisma/client";
 import { ADMIN_ROLE } from "@/service/enum/ADMIN_ROLE";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const formSchema = z.object({
   email: z.string().email({ message: "请输入有效的邮箱地址" }),
@@ -24,6 +31,7 @@ const formSchema = z.object({
   password: z.string().min(6, { message: "密码至少6个字符" }).optional(),
   phone: z.string().optional(),
   nickname: z.string().optional(),
+  type: z.enum([ADMIN_ROLE.ADMIN, ADMIN_ROLE.SUPERADMIN]),
 });
 
 export default function AdminForm({ admin }: { admin?: Admin }) {
@@ -42,13 +50,13 @@ export default function AdminForm({ admin }: { admin?: Admin }) {
       if (admin) {
         await updateAdmin(admin.id, {
           ...values,
-          role: values.role as ADMIN_ROLE,
+          type: values.type as ADMIN_ROLE,
         });
       } else {
         await createAdmin({
           ...values,
           password: values.password || "123456",
-          role: values.role as ADMIN_ROLE,
+          type: values.type as ADMIN_ROLE,
         });
       }
       router.push("/admins");
@@ -86,6 +94,30 @@ export default function AdminForm({ admin }: { admin?: Admin }) {
               <FormLabel>用户名</FormLabel>
               <FormControl>
                 <Input {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="type"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>角色</FormLabel>
+              <FormControl>
+                <Select {...field}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="选择角色" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value={ADMIN_ROLE.ADMIN}>管理员</SelectItem>
+                    <SelectItem value={ADMIN_ROLE.SUPERADMIN}>
+                      超级管理员
+                    </SelectItem>
+                  </SelectContent>
+                </Select>
               </FormControl>
               <FormMessage />
             </FormItem>
