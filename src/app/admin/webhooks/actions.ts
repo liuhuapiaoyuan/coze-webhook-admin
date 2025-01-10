@@ -40,6 +40,7 @@ export async function getWebhooks(
 // 创建Webhook
 export async function createWebhook(data: {
   url: string;
+  name: string;
   authorization: string;
 }) {
   const webhook = await db.cozeWebhook.create({
