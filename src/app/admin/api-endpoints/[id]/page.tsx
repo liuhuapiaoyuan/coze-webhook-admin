@@ -3,16 +3,17 @@ import { ApiEndpointForm } from "../_components/form";
 import { getApiEndpoint, getWebhookOptions } from "../actions";
 
 interface EditApiEndpointPageProps {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
 export default async function EditApiEndpointPage({
   params,
 }: EditApiEndpointPageProps) {
+  const { id } = await params;
   const [apiEndpoint, webhookOptions] = await Promise.all([
-    getApiEndpoint(params.id),
+    getApiEndpoint(id),
     getWebhookOptions(),
   ]);
 

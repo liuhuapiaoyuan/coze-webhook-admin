@@ -29,6 +29,12 @@ export const columns: ColumnDef<ApiEndpointWithWebhook>[] = [
   {
     accessorKey: "path",
     header: "路径",
+    cell: ({ row }) => {
+      if (row.original.type === "openaiLike") {
+        return `/api/v1/chat/completion`;
+      }
+      return `/api/${row.original.id}`;
+    },
   },
   {
     accessorKey: "type",
