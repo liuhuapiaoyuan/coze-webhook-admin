@@ -1,3 +1,3 @@
-docker-compose -p ai-human pull
-docker-compose -p ai-human down
-docker-compose -p ai-human up -d
+docker-compose -p coze-webhook pull
+docker-compose -p coze-webhook down
+docker-compose -p coze-webhook up -d

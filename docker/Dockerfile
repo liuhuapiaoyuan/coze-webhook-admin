@@ -10,6 +10,7 @@ FROM base AS builder
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
 COPY  ./next.docker.ts  ./next.config.ts
 
+# 生成配置文件
 RUN pnpm run db:generate
 RUN pnpm run build
 
@@ -43,4 +44,4 @@ ENV PORT 3000
 ENV HOST 0.0.0.0
 
 
-CMD ["node", "server.js"]
+CMD ["npm","run", "server:start"]

@@ -2,8 +2,8 @@ version: "3"
 
 services:
   ai-human:
-    image: liuhuapiaoyuan/ai-human
+    image: liuhuapiaoyuan/coze-webhook
     ports:
-      - "8124:3000"
+      - "8125:3000"
     env_file:
       - ./.env
