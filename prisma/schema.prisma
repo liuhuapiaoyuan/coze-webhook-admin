@@ -70,3 +70,47 @@ model Menu {
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @updatedAt
 }
+
+model CozeWebhook {
+  id            String        @id @default(cuid())
+  url           String
+  authorization String
+  apiEndpoints  ApiEndpoint[]
+  logs          ApiEndpointLog[]
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+}
+
+model ApiEndpoint {
+  id             String           @id @default(cuid())
+  cozeWebhook    CozeWebhook      @relation(fields: [cozeWebhookId], references: [id])
+  cozeWebhookId  String
+  type           String           // openaiLike or request
+  name           String
+  description    String?
+  apiKeys        ApiKey[]
+  logs           ApiEndpointLog[]
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+}
+
+model ApiKey {
+  id            String        @id @default(cuid())
+  key           String        @unique
+  apiEndpoints  ApiEndpoint[]
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+}
+
+model ApiEndpointLog {
+  id              String      @id @default(cuid())
+  apiEndpoint     ApiEndpoint @relation(fields: [apiEndpointId], references: [id])
+  apiEndpointId   String
+  cozeWebhook     CozeWebhook @relation(fields: [cozeWebhookId], references: [id])
+  cozeWebhookId   String
+  requestParams   String      // JSON string of request parameters
+  response        String      // JSON string of response
+  duration        Int         // Duration in milliseconds
+  apiKey          String      // The API key used for this request
+  createdAt       DateTime    @default(now())
+}
