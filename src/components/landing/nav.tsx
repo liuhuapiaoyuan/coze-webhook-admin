@@ -38,7 +38,7 @@ export async function LandingNav() {
         <div className="flex items-center gap-4">
           {session?.user ? (
             <Button asChild>
-              <Link href="/dashboard">进入控制台</Link>
+              <Link href="/admin/dashboard">进入控制台</Link>
             </Button>
           ) : (
             <>

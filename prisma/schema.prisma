@@ -73,6 +73,7 @@ model Menu {
 
 model CozeWebhook {
   id            String        @id @default(cuid())
+  name          String
   url           String
   authorization String
   apiEndpoints  ApiEndpoint[]

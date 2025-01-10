@@ -1,17 +1,18 @@
 import {
-  AudioLines,
-  Calendar,
-  FolderXIcon,
-  Home,
-  SquareUserRound,
-  Inbox,
-  Martini,
-  PersonStanding,
+  Users,
+  User,
   Plus,
-  Lock,
-  User2Icon,
+  Key,
   Menu,
+  LayoutDashboard,
+  Webhook,
+  Aperture,
+  History,
+  UserCog,
+  Shield,
+  FileCode,
 } from "lucide-react";
+
 export const APP_MENUS: Array<{
   id: string;
   title: string;
@@ -28,33 +29,28 @@ export const APP_MENUS: Array<{
     items: [
       {
         title: "工作台",
-        icon: Home,
-        url: "/dashboard",
+        icon: LayoutDashboard,
+        url: "/admin/dashboard",
       },
       {
-        title: "数字人市场",
-        icon: Calendar,
-        url: "/digital-humans",
+        title: "扣子Hook",
+        icon: Webhook,
+        url: "/admin/webhooks",
       },
       {
-        title: "设备",
-        icon: Inbox,
-        url: "/devices",
+        title: "API服务管理",
+        icon: Aperture,
+        url: "/admin/api-endpoints",
       },
       {
-        title: "用户",
-        icon: User2Icon,
-        url: "/users",
+        title: "API密钥管理",
+        icon: Key,
+        url: "/admin/api-keys",
       },
       {
-        title: "营销",
-        icon: Martini,
-        url: "/marketing/sign-in-rules",
-      },
-      {
-        title: "语音管理",
-        icon: AudioLines,
-        url: "/voices",
+        title: "调用日志",
+        icon: History,
+        url: "/admin/api-logs",
       },
     ],
   },
@@ -64,23 +60,23 @@ export const APP_MENUS: Array<{
     items: [
       {
         title: "管理员",
-        icon: PersonStanding,
-        url: "/admins",
+        icon: UserCog,
+        url: "/admin/admins",
       },
       {
         title: "角色管理",
-        icon: SquareUserRound,
-        url: "/roles",
+        icon: Users,
+        url: "/admin/roles",
       },
       {
         title: "权限管理",
-        icon: Lock,
-        url: "/permissions",
+        icon: Shield,
+        url: "/admin/permissions",
       },
       {
         title: "菜单管理",
         icon: Menu,
-        url: "/menus",
+        url: "/admin/menus",
       },
     ],
   },
@@ -90,7 +86,7 @@ export const APP_MENUS: Array<{
     items: [
       {
         title: "接口文档",
-        icon: FolderXIcon,
+        icon: FileCode,
         target: "_blank",
         url: "/api/swagger",
       },
@@ -106,7 +102,7 @@ export const QuickActions = [
   },
   {
     title: "个人中心",
-    icon: PersonStanding,
+    icon: User,
     url: "/profile",
   },
 ];

@@ -10,6 +10,7 @@
 
 export default async function AdminsPage(props: PageProps) {
 return (
+
 <div className="container mx-auto py-10">
 <div className="mb-6 flex items-center justify-between">
 <h1 className="text-2xl font-bold">管理员管理</h1>
@@ -75,7 +76,7 @@ searchParams={props.searchParams}
     };
     }
 
-- 创建 /admin/{module}/columns.ts
+- 创建 /admin/{module}/columns.tsx
 
 ```typescript
 "use client";
@@ -91,7 +92,7 @@ import {
 import { MoreHorizontal, Edit } from "lucide-react";
 import { deleteMenu } from "./actions";
 import Link from "next/link";
-import { RemoveButton } from "./_components/remove-button";
+import { RemoveButton } from "@/components/remove-button";
 
 export const columns: ColumnDef<Menu>[] = [
   {

@@ -16,7 +16,10 @@ export default function NotFound() {
         </p>
         <div className="mt-8">
           <Button asChild>
-            <Link href="/dashboard" className="inline-flex items-center gap-2">
+            <Link
+              href="/admin/dashboard"
+              className="inline-flex items-center gap-2"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
