@@ -1,6 +1,7 @@
 "use server";
 
 import { db } from "@/lib/db";
+import { ApiEndpointsService } from "@/service/api-endpoints.service";
 import { revalidatePath } from "next/cache";
 
 // 获取API端点列表
@@ -79,12 +80,7 @@ export async function deleteApiEndpoint(id: string) {
 
 // 获取单个API端点
 export async function getApiEndpoint(id: string) {
-  return db.apiEndpoint.findUnique({
-    where: { id },
-    include: {
-      cozeWebhook: true,
-    },
-  });
+  return ApiEndpointsService.getApiendpoint(id);
 }
 
 // 获取所有Webhook选项

@@ -88,6 +88,7 @@ model ApiEndpoint {
   cozeWebhookId  String
   type           String           // openaiLike or request
   name           String
+  path           String
   description    String?
   apiKeys        ApiKey[]
   logs           ApiEndpointLog[]

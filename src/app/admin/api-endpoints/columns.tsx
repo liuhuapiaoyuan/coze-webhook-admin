@@ -25,6 +25,16 @@ export const columns: ColumnDef<ApiEndpointWithWebhook>[] = [
   {
     accessorKey: "name",
     header: "名称",
+    cell: ({ row }) => {
+      return (
+        <Link
+          className="text-blue-600 hover:underline"
+          href={`api-endpoints/${row.original.id}/detail`}
+        >
+          {row.original.name}
+        </Link>
+      );
+    },
   },
   {
     accessorKey: "path",
@@ -70,7 +80,7 @@ export const columns: ColumnDef<ApiEndpointWithWebhook>[] = [
       };
       return (
         <div className="flex gap-2">
-          <Link href={`/admin/api-endpoints/${apiEndpoint.id}`}>
+          <Link href={`api-endpoints/${apiEndpoint.id}`}>
             <Button className="h-8 py-0" variant={"ghost"}>
               编辑
               <Edit className="h-4 w-4" />
