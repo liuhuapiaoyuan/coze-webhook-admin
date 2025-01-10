@@ -1,4 +1,4 @@
-import { Command, LogOut } from "lucide-react";
+import { LogOut } from "lucide-react";
 import { BadgeCheck, Bell } from "lucide-react";
 
 import {

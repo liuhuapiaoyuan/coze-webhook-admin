@@ -24,7 +24,7 @@ export function Hero() {
         <div className="relative z-20 mt-auto">
           <blockquote className="space-y-2">
             <p className="text-lg">
-              "这个平台让我们能够轻松管理和部署数字人，大大提高了我们的工作效率。"
+              这个平台让我们能够轻松管理和部署数字人，大大提高了我们的工作效率。
             </p>
             <footer className="text-sm">某科技公司 CEO</footer>
           </blockquote>

@@ -5,7 +5,7 @@ import { DataTable } from "@/components/shared/data-table";
 import { ColumnDef } from "@tanstack/react-table";
 import { formatDateTime } from "@/lib/utils";
 import { getEndpointKeys } from "../actions";
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 interface KeysListProps {
   endpointId: string;

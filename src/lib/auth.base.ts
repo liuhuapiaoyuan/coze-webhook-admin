@@ -1,4 +1,3 @@
-import { ADMIN_ROLE } from "@/service/enum/ADMIN_ROLE";
 import NextAuth, { DefaultSession, NextAuthConfig } from "next-auth";
 declare module "next-auth" {
   interface Session {

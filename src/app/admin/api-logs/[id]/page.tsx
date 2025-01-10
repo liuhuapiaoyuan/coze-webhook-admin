@@ -5,15 +5,16 @@ import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 interface ApiLogDetailPageProps {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
 export default async function ApiLogDetailPage({
   params,
 }: ApiLogDetailPageProps) {
-  const log = await getApiLog(params.id);
+  const { id } = await params;
+  const log = await getApiLog(id);
 
   if (!log) {
     notFound();
@@ -79,10 +80,12 @@ export default async function ApiLogDetailPage({
                 <dd className="mt-1">
                   <span
                     className={
-                      log.duration > 1000 ? "text-yellow-600" : "text-green-600"
+                      (log.duration ?? 0) > 1000
+                        ? "text-yellow-600"
+                        : "text-green-600"
                     }
                   >
-                    {log.duration}ms
+                    {log.duration ?? "--"}ms
                   </span>
                 </dd>
               </div>
@@ -107,7 +110,7 @@ export default async function ApiLogDetailPage({
           </CardHeader>
           <CardContent>
             <pre className="whitespace-pre-wrap rounded-lg bg-muted p-4">
-              {JSON.stringify(JSON.parse(log.response), null, 2)}
+              {JSON.stringify(JSON.parse(log.response ?? "{}"), null, 2)}
             </pre>
           </CardContent>
         </Card>
