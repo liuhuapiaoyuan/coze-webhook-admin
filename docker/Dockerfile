@@ -1,17 +1,19 @@
 FROM node:22-alpine AS base
-
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
+RUN corepack enable
 
 # 安装依赖
-FROM base AS dept
- 
+FROM base AS dept 
 WORKDIR /app
 COPY package.json pnpm-lock.yaml package-lock.json* ./
-RUN npm install --force
+COPY patches ./patches
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
+
 # 构建脚本
-FROM base AS builder
+FROM dept AS builder
 # 设置工作目录
 WORKDIR /app
-COPY --from=dept /app/node_modules  ./node_modules
 COPY  . .
 COPY  ./next.docker.ts  ./next.config.ts
 
@@ -42,10 +44,8 @@ COPY --from=builder --chown=nextjs:nodejs /app/prisma ./prisma
 # COPY --from=builder --chown=nextjs:nodejs /app/node_modules/.bin/prisma ./node_modules/.bin/prisma
 # COPY --from=builder --chown=nextjs:nodejs /app/node_modules/prisma ./node_modules/prisma
 # COPY --from=builder --chown=nextjs:nodejs /app/node_modules/@prisma ./node_modules/@prisma
-
+# npx prisma migrate dev
  
-
-
 EXPOSE 3000
 ENV PORT 3000
 ENV HOST 0.0.0.0
