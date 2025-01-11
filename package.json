@@ -6,7 +6,7 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "server:start": "prisma migrate deploy && next start",
+    "server:start": "npx prisma migrate deploy && node server.js",
     "lint": "next lint",
     "db:push": "prisma db push",
     "db:reset": "prisma db reset",

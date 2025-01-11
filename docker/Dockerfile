@@ -50,5 +50,6 @@ EXPOSE 3000
 ENV PORT 3000
 ENV HOST 0.0.0.0
 
+RUN npx prisma version
 
 CMD ["npm","run", "server:start"]
