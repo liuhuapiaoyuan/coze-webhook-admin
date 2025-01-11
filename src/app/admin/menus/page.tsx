@@ -5,6 +5,7 @@ import { Plus } from "lucide-react";
 import Link from "next/link";
 import PageTable from "@/components/page-table";
 import { Metadata } from "next";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export const metadata: Metadata = {
   title: "菜单",
@@ -23,12 +24,28 @@ export default async function MenuPage(props: PageProps) {
           </Button>
         </Link>
       </div>
-      <PageTable
-        basePath="/admin/menus"
-        load={getMenus}
-        columns={columns}
-        searchParams={props.searchParams}
-      />
+      <Tabs defaultValue="system">
+        <TabsList>
+          <TabsTrigger value="system">系统菜单</TabsTrigger>
+          <TabsTrigger value="custom">自定义菜单</TabsTrigger>
+        </TabsList>
+        <TabsContent value="system">
+          <PageTable
+            basePath="/admin/menus"
+            load={(data) => getMenus({ ...data, type: "system" })}
+            columns={columns}
+            searchParams={props.searchParams}
+          />
+        </TabsContent>
+        <TabsContent value="custom">
+          <PageTable
+            basePath="/admin/menus"
+            load={(data) => getMenus({ ...data, type: "custom" })}
+            columns={columns}
+            searchParams={props.searchParams}
+          />
+        </TabsContent>
+      </Tabs>
     </div>
   );
 }
