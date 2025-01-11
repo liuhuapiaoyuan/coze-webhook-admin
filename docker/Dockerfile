@@ -1,23 +1,30 @@
 FROM node:22-alpine AS base
 
-ENV PNPM_HOME="/pnpm"
-ENV PATH="$PNPM_HOME:$PATH"
-RUN corepack enable
-COPY . /app
-WORKDIR /app
 
+# 安装依赖
+FROM base AS dept
+ 
+WORKDIR /app
+COPY package.json pnpm-lock.yaml package-lock.json* ./
+RUN npm install --force
+# 构建脚本
 FROM base AS builder
-RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
+# 设置工作目录
+WORKDIR /app
+COPY --from=dept /app/node_modules  ./node_modules
+COPY  . .
 COPY  ./next.docker.ts  ./next.config.ts
 
+
 # 生成配置文件
-RUN pnpm run db:generate
-RUN pnpm run build
+RUN npx next telemetry disable
+RUN npm run db:generate
+RUN npm run build
 
 
 # 创建运行环境
-FROM base as runtime
-# 设置工作目录
+FROM base as runner
+
 WORKDIR /app
 
 ENV NODE_ENV=production
@@ -32,9 +39,9 @@ COPY --from=builder /app/public ./public
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 COPY --from=builder --chown=nextjs:nodejs /app/prisma ./prisma
-COPY --from=builder --chown=nextjs:nodejs /app/node_modules/.bin/prisma ./node_modules/.bin/prisma
-COPY --from=builder --chown=nextjs:nodejs /app/node_modules/prisma ./node_modules/prisma
-COPY --from=builder --chown=nextjs:nodejs /app/node_modules/@prisma ./node_modules/@prisma
+# COPY --from=builder --chown=nextjs:nodejs /app/node_modules/.bin/prisma ./node_modules/.bin/prisma
+# COPY --from=builder --chown=nextjs:nodejs /app/node_modules/prisma ./node_modules/prisma
+# COPY --from=builder --chown=nextjs:nodejs /app/node_modules/@prisma ./node_modules/@prisma
 
  
 

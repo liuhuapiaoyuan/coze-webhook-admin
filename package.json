@@ -93,5 +93,9 @@
     "patchedDependencies": {
       "@elysiajs/swagger@1.2.0": "patches/@elysiajs__swagger@1.2.0.patch"
     }
+  },
+  "overrides": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
   }
 }

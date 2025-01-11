@@ -43,7 +43,7 @@ export function QuickLink() {
         </span>
       </div>
       <CommandDialog
-        filter={(value, searchKey) => {
+        filter={(value: string, searchKey: string) => {
           const results = search(value, searchKey);
           if ((results?.length ?? 0) > 0) return 1;
           return 0;
