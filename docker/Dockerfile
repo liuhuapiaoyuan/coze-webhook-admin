@@ -8,6 +8,7 @@ FROM base AS dept
 WORKDIR /app
 COPY package.json pnpm-lock.yaml package-lock.json* ./
 COPY patches ./patches
+COPY .npmrc ./
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
 
 # 构建脚本
@@ -41,6 +42,7 @@ COPY --from=builder /app/public ./public
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 COPY --from=builder --chown=nextjs:nodejs /app/prisma ./prisma
+COPY --from=builder --chown=nextjs:nodejs /app/.npmrc ./
 # COPY --from=builder --chown=nextjs:nodejs /app/node_modules/.bin/prisma ./node_modules/.bin/prisma
 # COPY --from=builder --chown=nextjs:nodejs /app/node_modules/prisma ./node_modules/prisma
 # COPY --from=builder --chown=nextjs:nodejs /app/node_modules/@prisma ./node_modules/@prisma
