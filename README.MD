@@ -2,6 +2,14 @@
 
 欢迎来到 **COZE 管理端**，这是一个功能强大的管理系统，旨在帮助您轻松管理 **Coze Webhook** 服务、API 端点、API 密钥以及相关的调用日志。无论您是开发者还是管理员，COZE 管理端都能为您提供高效、便捷的管理体验。
 
+## 📖 英文文档
+
+如果您需要查看英文文档 [这里](./README_EN.md)。
+
+---
+
+**Note**: The English documentation is available [here](./README_EN.md).
+
 ## 🌟 项目简介
 
 COZE 管理端是一个基于 **Next.js 15**、**React 19**、**TypeScript** 和 **Prisma** 构建的现代化管理系统。它提供了丰富的功能模块，包括：
@@ -28,7 +36,7 @@ COZE 管理端是一个基于 **Next.js 15**、**React 19**、**TypeScript** 和
 ### 1. 克隆仓库
 
 ```bash
-git clone https://github.com/your-repo/coze-webhook-admin.git
+git clone https://github.com/liuhuapiaoyuan/coze-webhook-admin.git
 cd coze-webhook-admin
 ```
 
