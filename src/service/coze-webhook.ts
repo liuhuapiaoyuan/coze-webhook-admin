@@ -12,15 +12,10 @@ declare global {
   var WebhookCache: MemoryCache<CozeCache>;
 }
 
-let WebhookCache: MemoryCache<CozeCache>;
-if (process.env.NODE_ENV === "production") {
-  WebhookCache = new MemoryCache<CozeCache>();
-} else {
-  if (!global.WebhookCache) {
-    global.WebhookCache = new MemoryCache<CozeCache>();
-  }
-  WebhookCache = global.WebhookCache;
+if (!global.WebhookCache) {
+  global.WebhookCache = new MemoryCache<CozeCache>();
 }
+export const WebhookCache = global.WebhookCache;
 
 export class CozeWebhookService {
   static async getClient(id: string) {
@@ -68,8 +63,7 @@ export class CozeWebhook {
     this.id = id;
     this.url = url;
     this.authorization = authorization;
-    this.callback =
-      callback ?? `${process.env.NEXT_PUBLIC_API_URL}/webhook/${id}`;
+    this.callback = callback ?? `${process.env.DOMAIN_URL}/webhook/${id}`;
   }
 
   //   转发给coze

@@ -34,8 +34,7 @@ export class CozeWebhook {
     this.id = id;
     this.url = url;
     this.authorization = authorization;
-    this.callback =
-      callback ?? `${process.env.NEXT_PUBLIC_API_URL}/webhook/${id}`;
+    this.callback = callback ?? `${process.env.DOMAIN_URL}/webhook/${id}`;
   }
 
   //   转发给coze

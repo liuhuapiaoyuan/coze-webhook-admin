@@ -4,11 +4,16 @@ export interface Cache<T> {
   delete(key: string): Promise<void>;
   update(key: string, partialValue: Partial<T>, ttl?: number): Promise<void>;
   clear(): Promise<void>;
+
+  allEntrys(): Promise<Map<string, { value: T; expiry: number | null }>>;
 }
 
 export class MemoryCache<T> implements Cache<T> {
   private cache: Map<string, { value: T; expiry: number | null }> = new Map();
 
+  async allEntrys(): Promise<Map<string, { value: T; expiry: number | null }>> {
+    return this.cache;
+  }
   async get(key: string): Promise<T | undefined> {
     const item = this.cache.get(key);
     if (!item) return undefined;

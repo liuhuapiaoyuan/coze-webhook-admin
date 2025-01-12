@@ -11,7 +11,8 @@ interface DetailTabsProps {
   };
 }
 
-export function DetailTabs({ apiEndpoint }: DetailTabsProps) {
+export async function DetailTabs({ apiEndpoint }: DetailTabsProps) {
+  const baseUrl = process.env.DOMAIN_URL;
   return (
     <Tabs defaultValue="method" className="w-full">
       <TabsList className="grid w-full grid-cols-3">
@@ -25,7 +26,7 @@ export function DetailTabs({ apiEndpoint }: DetailTabsProps) {
             {apiEndpoint.type === "openaiLike" && (
               <pre className="rounded bg-slate-950 p-4 text-sm text-slate-50">
                 {`curl -X POST \\
-${process.env.NEXT_PUBLIC_API_URL}${apiEndpoint.path} \\
+${baseUrl}${apiEndpoint.path} \\
 -H "Content-Type: application/json" \\
 -H "Authorization: Bearer <YOUR_API_KEY>" \\
 -d '{
@@ -42,7 +43,7 @@ ${process.env.NEXT_PUBLIC_API_URL}${apiEndpoint.path} \\
             {apiEndpoint.type === "request" && (
               <pre className="rounded bg-slate-950 p-4 text-sm text-slate-50">
                 {`curl -X POST \\
-${process.env.NEXT_PUBLIC_API_URL}${apiEndpoint.path} \\
+${baseUrl}${apiEndpoint.path} \\
 -H "Content-Type: application/json" \\
 -H "Authorization: Bearer <YOUR_API_KEY>" \\
 -d '{ "foo": "bar" }'
