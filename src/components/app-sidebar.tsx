@@ -29,7 +29,7 @@ import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { redirect } from "next/navigation";
 import { QuickLink } from "./quick-link";
-import { APP_MENUS } from "./app-actions";
+import { APP_MENUS } from "../const/app-actions";
 import Image from "next/image";
 
 export async function AppSidebar() {

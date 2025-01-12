@@ -24,6 +24,7 @@ import {
   SelectItem,
 } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
+import { IconPickerDialog } from "@/components/shared/icon-picker/icon-picker-dialog";
 
 const menuFormSchema = z.object({
   name: z.string().min(1, "菜单名称不能为空"),
@@ -70,8 +71,8 @@ export function MenuForm({ initialData }: MenuFormProps) {
       } else {
         await createMenu(data);
       }
+      router.back();
       router.push("/admin/menus");
-      router.refresh();
     } catch (error) {
       toast({
         title: "操作失败",
@@ -85,6 +86,24 @@ export function MenuForm({ initialData }: MenuFormProps) {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <FormField
+          control={form.control}
+          name="icon"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>图标</FormLabel>
+              <FormControl>
+                <div>
+                  <IconPickerDialog
+                    value={field.value ?? undefined}
+                    onChange={field.onChange}
+                  />
+                </div>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
         <FormField
           control={form.control}
           name="name"
@@ -157,23 +176,7 @@ export function MenuForm({ initialData }: MenuFormProps) {
             </FormItem>
           )}
         />
-        <FormField
-          control={form.control}
-          name="icon"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>图标</FormLabel>
-              <FormControl>
-                <Input
-                  placeholder="请输入图标"
-                  {...field}
-                  value={field.value!}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+
         <Button type="submit">{initialData ? "更新" : "创建"}</Button>
       </form>
     </Form>

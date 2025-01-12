@@ -21,8 +21,8 @@ COPY  ./next.docker.ts  ./next.config.ts
 
 # 生成配置文件
 RUN npx next telemetry disable
-RUN npm run db:generate
-RUN npm run build
+RUN pnpm run db:generate
+RUN pnpm run build
 
 
 # 创建运行环境

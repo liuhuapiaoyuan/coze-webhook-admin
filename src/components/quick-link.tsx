@@ -12,7 +12,7 @@ import {
   CommandList,
   CommandSeparator,
 } from "@/components/ui/command";
-import { APP_MENUS, QuickActions } from "./app-actions";
+import { APP_MENUS, QuickActions } from "../const/app-actions";
 import { useRouter } from "next/navigation";
 
 export function QuickLink() {

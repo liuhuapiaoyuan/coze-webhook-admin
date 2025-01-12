@@ -12,11 +12,21 @@ import { MoreHorizontal, Edit } from "lucide-react";
 import { deleteMenu } from "./actions";
 import Link from "next/link";
 import { RemoveButton } from "./_components/remove-button";
+import { getIconComponent } from "@/const/ICONS";
 
 export const columns: ColumnDef<Menu>[] = [
   {
     accessorKey: "name",
     header: "菜单名称",
+    cell: ({ row }) => {
+      const Icon = getIconComponent(row.original.icon);
+      return (
+        <div className="flex items-center gap-2">
+          {Icon && <Icon className="size-4 " />}
+          {row.original.name}
+        </div>
+      );
+    },
   },
   {
     accessorKey: "url",
@@ -25,10 +35,6 @@ export const columns: ColumnDef<Menu>[] = [
   {
     accessorKey: "orderNum",
     header: "排序",
-  },
-  {
-    accessorKey: "icon",
-    header: "图标",
   },
   {
     id: "actions",
@@ -41,7 +47,7 @@ export const columns: ColumnDef<Menu>[] = [
       };
       return (
         <div className="flex gap-2">
-          <Link href={`/menus/${menu.id}`}>
+          <Link href={`/admin/menus/${menu.id}`}>
             <Button className="h-8 py-0" variant={"ghost"}>
               编辑
               <Edit className="h-4 w-4" />
