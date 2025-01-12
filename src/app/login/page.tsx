@@ -1,5 +1,3 @@
-import { GalleryVerticalEnd } from "lucide-react";
-
 import { LoginForm } from "@/components/auth/login-form";
 import Image from "next/image";
 
@@ -9,8 +7,14 @@ export default function LoginPage() {
       <div className="flex flex-col gap-4 p-6 md:p-10">
         <div className="flex justify-center gap-2 md:justify-start">
           <a href="#" className="flex items-center gap-2 font-medium">
-            <div className="flex h-6 w-6 items-center justify-center rounded-md bg-primary text-primary-foreground">
-              <GalleryVerticalEnd className="size-4" />
+            <div className="flex  items-center justify-center rounded-md bg-primary text-primary-foreground">
+              <Image
+                src="/coze.png"
+                alt="Image"
+                width={500}
+                height={500}
+                className="size-6"
+              />
             </div>
             扣子Hook服务
           </a>

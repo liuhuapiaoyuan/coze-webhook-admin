@@ -89,7 +89,3 @@ export async function POST(request: NextRequest) {
     });
   }
 }
-
-export function GET() {
-  return new Response("Hello!");
-}

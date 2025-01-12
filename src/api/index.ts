@@ -13,6 +13,7 @@ app.onError({ as: "global" }, ({ code, error }) => {
     }
   );
 });
+app.get("/abc", () => Response.json({ hello: "world" }));
 app.use(swagger({ path: "/swagger" }));
 
 export type TElysiaApp = typeof app;

@@ -43,7 +43,3 @@ export async function POST(
     });
   }
 }
-
-export function GET() {
-  return new Response("Hello!");
-}

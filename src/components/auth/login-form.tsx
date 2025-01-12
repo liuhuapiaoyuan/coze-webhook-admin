@@ -17,6 +17,7 @@ import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import Link from "next/link";
 
 export function LoginForm({
   className,
@@ -112,9 +113,9 @@ export function LoginForm({
             </div>
             <div className="mt-4 text-center text-sm">
               还没有账户？{" "}
-              <a href="#" className="underline underline-offset-4">
+              <Link href="/register" className="underline underline-offset-4">
                 注册
-              </a>
+              </Link>
             </div>
           </form>
         </CardContent>
