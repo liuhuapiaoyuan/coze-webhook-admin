@@ -1,6 +1,7 @@
 import { GalleryVerticalEnd } from "lucide-react";
 
 import { LoginForm } from "@/components/auth/login-form";
+import Image from "next/image";
 
 export default function LoginPage() {
   return (
@@ -15,17 +16,25 @@ export default function LoginPage() {
           </a>
         </div>
         <div className="flex flex-1 items-center justify-center">
-          <div className="w-[500px] max-w-full">
+          <div className="max-w-full md:w-[500px]">
             <LoginForm />
           </div>
         </div>
       </div>
-      <div className="relative hidden bg-muted lg:block">
-        <img
-          src="/placeholder.svg"
+      <div className="relative hidden flex-col items-center justify-center gap-2 bg-muted md:flex ">
+        <Image
+          src="/coze.png"
           alt="Image"
-          className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
+          width={500}
+          height={500}
+          className="h-40 w-40"
         />
+        <span>
+          <h2 className="text-xl font-bold tracking-tight">COZE服务</h2>
+          <p className="text-sm text-muted-foreground">
+            扣子Hook服务是一个用于扣子Hook的开源服务，为您提供扣子Hook的一站式服务。
+          </p>
+        </span>
       </div>
     </div>
   );

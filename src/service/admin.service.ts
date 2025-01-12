@@ -114,7 +114,6 @@ export class AdminService {
         OR: [{ email: account }, { username: account }],
       },
     });
-
     if (!admin) {
       throw new Error("账号或者密码错误");
     }
@@ -132,6 +131,7 @@ export class AdminService {
       nickname: admin.nickname,
       name: admin.nickname,
       phone: admin.phone,
+      type: admin.type,
     };
   }
 

@@ -38,7 +38,7 @@ export function LoginForm({
     setIsLoading(true);
     const result = await signIn("credentials", {
       ...data,
-      redirect: false,
+      redirectTo: "/admin/dashboard",
     });
     setIsLoading(false);
     if (result?.error) {

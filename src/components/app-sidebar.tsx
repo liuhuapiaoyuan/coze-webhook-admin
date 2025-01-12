@@ -43,7 +43,7 @@ export async function AppSidebar() {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" asChild>
-              <Link href="/dashboard">
+              <Link href="/admin/dashboard">
                 <div className="flex aspect-square size-8 items-center justify-center overflow-hidden rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
                   <Image
                     src="/coze.png"
@@ -154,7 +154,9 @@ export async function AppSidebar() {
               <DropdownMenuItem
                 onClick={async () => {
                   "use server";
-                  await signOut();
+                  await signOut({
+                    redirectTo: "/",
+                  });
                 }}
                 className="text-red-600 hover:text-red-800"
               >
