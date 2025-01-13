@@ -20,7 +20,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 
-type WebhookWithCount = CozeWebhook & {
+export type WebhookWithCount = CozeWebhook & {
   _count: {
     apiEndpoints: number;
     logs: number;
