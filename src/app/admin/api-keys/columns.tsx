@@ -76,7 +76,7 @@ export const columns: ColumnDef<ApiKeyWithRelations>[] = [
           {apiEndpoints.map((endpoint) => (
             <div key={endpoint.id} className="text-sm">
               <Link
-                href={`api-endpoints/${endpoint.id}`}
+                href={`api-endpoints/${endpoint.id}/detail`}
                 className="text-blue-600 hover:underline"
               >
                 {endpoint.name}
