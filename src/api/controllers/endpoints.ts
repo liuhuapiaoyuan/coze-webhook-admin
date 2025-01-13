@@ -5,6 +5,7 @@ import { db } from "@/lib/db";
 import { ApiEndpointsService } from "@/service/api-endpoints.service";
 import { chatCompletionReq, chatCompletionResp } from "../dto/chatComplection";
 import { v4 as uuidv4 } from "uuid";
+import { headerParams } from "../dto/headers";
 
 export const endpoints = new Elysia({
   prefix: "/v1",
@@ -13,6 +14,7 @@ export const endpoints = new Elysia({
   },
 })
   .use(apiKey())
+
   .get(
     "/models",
     async ({ Auth: { apiKey } }) => {
@@ -46,7 +48,11 @@ export const endpoints = new Elysia({
     "/:api_id",
     async ({ body, params: { api_id }, Auth: { apiKey } }) => {
       if (!apiKey) throw new Error("API key not found");
-      const coze = await ApiEndpointsService.getClient(apiKey.key, api_id);
+      const coze = await ApiEndpointsService.getClient(
+        apiKey.key,
+        api_id,
+        "request"
+      );
       const { hookId } = await coze.send(body as Record<string, string>);
       let result: string | undefined;
       let attempts = 0;
@@ -72,6 +78,7 @@ export const endpoints = new Elysia({
       detail: {
         description: "调用API端点",
       },
+      headers: headerParams,
     }
   )
   .post(
@@ -79,7 +86,11 @@ export const endpoints = new Elysia({
     async ({ body, Auth: { apiKey } }) => {
       if (!apiKey) throw new Error("API key not found");
 
-      const coze = await ApiEndpointsService.getClient(apiKey.key, body.model);
+      const coze = await ApiEndpointsService.getClient(
+        apiKey.key,
+        body.model,
+        "openaiLike"
+      );
       if (!coze) {
         throw new Error("API endpoint not found");
       }
@@ -140,6 +151,7 @@ export const endpoints = new Elysia({
     {
       body: chatCompletionReq,
       response: chatCompletionResp,
+      headers: headerParams,
       detail: {
         description: "Openai风格的对话",
       },

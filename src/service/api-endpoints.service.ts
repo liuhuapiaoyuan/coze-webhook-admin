@@ -37,14 +37,23 @@ export class ApiEndpointsService {
    * @param id
    * @returns
    */
-  static async getClient(apiKey: string, id: string) {
+  static async getClient(
+    apiKey: string,
+    id: string,
+    type?: "openaiLike" | "request"
+  ) {
     const apiKeys = await db.apiKey.findFirst({
       where: {
         key: apiKey,
         apiEndpoints: {
-          some: {
-            id,
-          },
+          some: type
+            ? {
+                id,
+                type,
+              }
+            : {
+                id,
+              },
         },
       },
       include: {
@@ -57,12 +66,12 @@ export class ApiEndpointsService {
     });
 
     if (!apiKeys) {
-      throw new Error("API key not found");
+      throw new Error("API key Or API endpoint not found");
     }
     const apiEndpoint = apiKeys.apiEndpoints.find((item) => item.id === id);
 
     if (!apiEndpoint) {
-      throw new Error("API endpoint not found");
+      throw new Error("API key Or API endpoint not found");
     }
     const coze = new CozeWebhook(apiEndpoint.cozeWebhook);
 

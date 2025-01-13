@@ -14,8 +14,12 @@ function getBearerKey(request: {
   query: Record<string, string | undefined>;
   headers: Record<string, string | undefined>;
 }): string | null {
-  const authHeader = request.headers["Authorization"];
-  if (authHeader && authHeader.startsWith("Bearer ")) {
+  const authHeader =
+    request.headers["Authorization"] || request.headers["authorization"];
+  if (
+    authHeader &&
+    (authHeader.startsWith("Bearer ") || authHeader.startsWith("bearer "))
+  ) {
     return authHeader.slice(7);
   }
   return request.query["access_token"] || null;
