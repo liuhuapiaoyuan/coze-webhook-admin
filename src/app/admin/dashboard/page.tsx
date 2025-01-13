@@ -6,11 +6,12 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Webhook, WebhookOff, Loader2 } from "lucide-react";
+import { Webhook, WebhookOff, Loader2, ShieldAlert } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import { zhCN } from "date-fns/locale";
 import { Welcome } from "./_components/welcome";
 import Link from "next/link";
+import { cn } from "@/lib/utils";
 
 async function getStats() {
   const [
@@ -82,7 +83,9 @@ export default async function DashboardPage() {
         <Link href="/admin/webhooks" className="block">
           <Card className="transition-shadow hover:shadow-lg">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-base font-medium">Webhook总数</CardTitle>
+              <CardTitle className="text-base font-medium">
+                Webhook总数
+              </CardTitle>
               <div className="rounded-full bg-blue-100 p-2 dark:bg-blue-900">
                 <Webhook className="h-6 w-6 text-blue-700 dark:text-blue-300" />
               </div>
@@ -96,7 +99,9 @@ export default async function DashboardPage() {
         <Link href="/admin/api-endpoints" className="block">
           <Card className="transition-shadow hover:shadow-lg">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-base font-medium">API端点总数</CardTitle>
+              <CardTitle className="text-base font-medium">
+                API端点总数
+              </CardTitle>
               <div className="rounded-full bg-green-100 p-2 dark:bg-green-900">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -116,7 +121,9 @@ export default async function DashboardPage() {
               </div>
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-bold">{stats.totalApiEndpoints}</div>
+              <div className="text-3xl font-bold">
+                {stats.totalApiEndpoints}
+              </div>
             </CardContent>
           </Card>
         </Link>
@@ -124,7 +131,9 @@ export default async function DashboardPage() {
         <Link href="/admin/api-keys" className="block">
           <Card className="transition-shadow hover:shadow-lg">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-base font-medium">API密钥总数</CardTitle>
+              <CardTitle className="text-base font-medium">
+                API密钥总数
+              </CardTitle>
               <div className="rounded-full bg-purple-100 p-2 dark:bg-purple-900">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -149,7 +158,9 @@ export default async function DashboardPage() {
         <Link href="/admin/api-logs" className="block">
           <Card className="transition-shadow hover:shadow-lg">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-base font-medium">平均响应时间</CardTitle>
+              <CardTitle className="text-base font-medium">
+                平均响应时间
+              </CardTitle>
               <div className="rounded-full bg-amber-100 p-2 dark:bg-amber-900">
                 <Loader2 className="h-6 w-6 text-amber-700 dark:text-amber-300" />
               </div>
@@ -185,8 +196,17 @@ export default async function DashboardPage() {
                       耗时：{log.duration}ms
                     </p>
                   </div>
-                  {(log.duration ?? 999999) > 3000 && (
-                    <WebhookOff className="ml-auto h-4 w-4 text-yellow-500" />
+                  {log.duration && log.status === "success" && (
+                    <WebhookOff
+                      className={cn(
+                        "ml-auto h-4 w-4 text-green-500",
+                        log.duration > 2000 && "text-yellow-500",
+                        log.duration > 5000 && "text-red-500"
+                      )}
+                    />
+                  )}
+                  {log.status === "failed" && (
+                    <ShieldAlert className="ml-auto h-4 w-4 text-red-500" />
                   )}
                 </div>
               ))}
