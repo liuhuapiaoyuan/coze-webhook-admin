@@ -23,7 +23,7 @@ export class ApiEndpointsService {
     const path =
       apiEndpoint.type === "openaiLike"
         ? "/api/v1/chat/completion"
-        : `/api/${apiEndpoint.id}`;
+        : `/api/v1/${apiEndpoint.id}`;
 
     return {
       ...apiEndpoint,
@@ -84,6 +84,38 @@ export class ApiEndpointsService {
        */
       send: (data: Record<string, string>) => {
         return coze.send(apiEndpoint.id, apiKey, data);
+      },
+      /**
+       * 简化请求过程，等待coze返回并获得计算结果
+       * @param data
+       * @param options
+       * @returns
+       */
+      request: async (
+        data: Record<string, string>,
+        options: {
+          timeout?: number;
+          maxAttempts?: number;
+        } = {}
+      ) => {
+        const { hookId } = await coze.send(apiEndpoint.id, apiKey, data);
+        let result: string | undefined;
+        let attempts = 0;
+        const maxAttempts = options.maxAttempts ?? 30;
+        while (!result && attempts < maxAttempts) {
+          const query = await coze.query(hookId);
+          result = query?.status === "success" ? query?.data : "";
+          if (!result) {
+            await new Promise((resolve) =>
+              setTimeout(resolve, options.timeout ?? 300)
+            );
+          }
+          attempts++;
+        }
+        if (!result) {
+          throw new Error("Max query attempts reached");
+        }
+        return JSON.parse(result);
       },
     };
   }

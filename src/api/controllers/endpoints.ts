@@ -53,28 +53,13 @@ export const endpoints = new Elysia({
         api_id,
         "request"
       );
-      const { hookId } = await coze.send(body as Record<string, string>);
-      let result: string | undefined;
-      let attempts = 0;
-      const maxAttempts = 30;
-      while (!result && attempts < maxAttempts) {
-        const query = await coze.coze.query(hookId);
-        result = query?.status === "success" ? query?.data : "";
-        if (!result) {
-          await new Promise((resolve) => setTimeout(resolve, 300));
-        }
-        attempts++;
-      }
-      if (!result) {
-        throw new Error("Max query attempts reached");
-      }
-      const cozeResponse = JSON.parse(result);
-      return cozeResponse;
+      return await coze.request(body as Record<string, string>);
     },
     {
       params: t.Object({
         api_id: t.String({ description: "API端点ID" }),
       }),
+      body: t.Any({}),
       detail: {
         description: "调用API端点",
       },
@@ -97,7 +82,7 @@ export const endpoints = new Elysia({
       const system_prompt =
         body.messages?.find((item) => item.role === "system")?.content ??
         "You are a helpful assistant.";
-      const { hookId } = await coze.send({
+      const resp = await coze.request({
         prompt: body.messages
           .filter((item) => item.role !== "system")
           .map((item) => {
@@ -106,22 +91,8 @@ export const endpoints = new Elysia({
           .join("\n--\n"),
         system_prompt,
       });
-      let result: string | undefined;
-      let attempts = 0;
-      const maxAttempts = 30;
-      while (!result && attempts < maxAttempts) {
-        const query = await coze.coze.query(hookId);
-        result = query?.status === "success" ? query?.data : "";
-        if (!result) {
-          await new Promise((resolve) => setTimeout(resolve, 300));
-        }
-        attempts++;
-      }
-      if (!result) {
-        throw new Error("Max query attempts reached");
-      }
 
-      const cozeResponse = JSON.parse(result) as { content: string };
+      const cozeResponse = resp as { content: string };
       return {
         id: uuidv4(),
         object: "chat.completion",

@@ -43,7 +43,7 @@ export const columns: ColumnDef<ApiEndpointWithWebhook>[] = [
       if (row.original.type === "openaiLike") {
         return `/api/v1/chat/completion`;
       }
-      return `/api/${row.original.id}`;
+      return `/api/v1/${row.original.id}`;
     },
   },
   {

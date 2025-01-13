@@ -22,8 +22,16 @@ const webhookFormSchema = z.object({
   name: z.string().min(1, "名称不能为空"),
   url: z.string().url("请输入有效的URL地址"),
   authorization: z.string().min(1, "授权密钥不能为空"),
-});
 
+  schema: z.array(
+    z.object({
+      name: z.string(),
+      description: z.string(),
+      type: z.string(),
+    })
+  ),
+});
+import { DynamicFormFields } from "@/components/shared/dynamic-form-fields";
 type WebhookFormValues = z.infer<typeof webhookFormSchema>;
 
 interface WebhookFormProps {
@@ -82,6 +90,7 @@ export function WebhookForm({ initialData }: WebhookFormProps) {
             </FormItem>
           )}
         />
+
         <FormField
           control={form.control}
           name="url"
