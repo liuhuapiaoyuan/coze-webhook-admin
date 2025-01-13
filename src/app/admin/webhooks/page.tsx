@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import Link from "next/link";
 import PageTable from "@/components/page-table";
+import { DemoTable } from "./demo";
 
 export default async function WebhooksPage(props: PageProps) {
   return (
