@@ -36,7 +36,7 @@ export const chatCompletionResp = t.Nullable(
       t.Object({
         index: t.Number({ description: "选择索引" }),
         message: t.Object({
-          role: t.String("assistant"),
+          role: t.String(),
           content: t.String({ description: "助手回复内容" }),
         }),
         logprobs: t.Null(),
