@@ -36,7 +36,7 @@ export function BasicInfo({ apiEndpoint }: BasicInfoProps) {
         </div>
         <div>
           <label className="font-medium">描述:</label>
-          <p>{apiEndpoint.description}</p>
+          <p className="whitespace-pre-wrap">{apiEndpoint.description}</p>
         </div>
         <div>
           <label className="font-medium">路径:</label>

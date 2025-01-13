@@ -23,25 +23,23 @@ export default async function ApiEndpointDetailPage({
   }
 
   return (
-    <div className="container mx-auto py-10">
-      <div className="mb-6 flex items-center justify-between">
-        <h1 className="text-2xl font-bold">API端点详情</h1>
+    <div className="container mx-auto px-4 py-10 sm:px-6 lg:px-8">
+      <div className="mb-6 flex flex-col items-start justify-between sm:flex-row sm:items-center">
+        <h1 className="mb-4 text-2xl font-bold sm:mb-0">API端点详情</h1>
         <Link href={`/admin/api-endpoints/${id}`}>
-          <Button>
+          <Button className="w-full sm:w-auto">
             <Edit className="mr-2 h-4 w-4" />
             编辑
           </Button>
         </Link>
       </div>
 
-      <div className="grid grid-cols-5 gap-6">
-        {/* 左侧详情信息 */}
-        <div className="col-span-2">
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-5">
+        <div className="lg:col-span-2">
           <BasicInfo apiEndpoint={apiEndpoint} />
         </div>
 
-        {/* 右侧标签页 */}
-        <div className="col-span-3">
+        <div className="lg:col-span-3">
           <DetailTabs apiEndpoint={apiEndpoint} />
         </div>
       </div>

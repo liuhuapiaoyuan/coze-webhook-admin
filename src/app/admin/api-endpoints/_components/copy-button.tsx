@@ -7,16 +7,23 @@ import { useToast } from "@/hooks/use-toast";
 interface CopyButtonProps {
   value: string;
   className?: string;
+  toastTitle?: string;
+  toastDescription?: string;
 }
 
-export function CopyButton({ value, className }: CopyButtonProps) {
+export function CopyButton({
+  value,
+  className,
+  toastTitle = "已复制",
+  toastDescription = "内容已复制到剪贴板",
+}: CopyButtonProps) {
   const { toast } = useToast();
 
   const handleCopy = async () => {
     await navigator.clipboard.writeText(value);
     toast({
-      title: "已复制",
-      description: "API密钥已复制到剪贴板",
+      title: toastTitle,
+      description: toastDescription,
     });
   };
 
