@@ -22,18 +22,33 @@ import { SmartPagination } from "./smart-pagination";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export type { ColumnDef } from "@tanstack/react-table";
-
+/**
+ * DataTable 组件的属性接口
+ * @template TData 表格数据类型
+ * @template TValue 表格单元格值类型
+ */
 interface DataTableProps<TData, TValue> {
+  /** 表格列定义 */
   columns: ColumnDef<TData, TValue>[];
+  /** 表格数据 */
   data: TData[];
+  /** 总行数（用于分页） */
   rowCount?: number;
+  /** 当前页码 */
   pageNumber?: number;
+  /** 每页显示的行数 */
   pageSize?: number;
+  /** 自定义空数据时的渲染内容 */
   empty?: React.ReactNode;
+  /** 空数据时的提示消息 */
   emptyMessage?: string;
+  /** 分页变化时的回调函数 */
   onPagination?: (pageIndex: number, pageSize: number) => void;
+  /** 可选的每页显示行数选项 */
   pageSizeOptions?: number[];
+  /** 是否正在加载数据 */
   loading?: boolean;
+  /** 是否启用虚拟滚动 */
   virtual?: boolean;
 }
 
@@ -205,15 +220,17 @@ export function DataTable<TData, TValue>({
                       }
                     : {
                         virtual: false as const,
-                        header: column as (typeof visibleColumns)[0],
+                        header:
+                          headerGroup.headers[
+                            (column as (typeof visibleColumns)[0]).getIndex()
+                          ],
                       };
                   return (
                     <TableHead
                       key={header.header.id}
                       style={virtual ? { width: header.header.getSize() } : {}}
                     >
-                      {(header.virtual && header.header.isPlaceholder) ||
-                      !header.virtual
+                      {header.virtual && header.header.isPlaceholder
                         ? null
                         : flexRender(
                             header.header.column.columnDef.header,
