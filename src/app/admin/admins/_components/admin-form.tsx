@@ -39,6 +39,7 @@ export default function AdminForm({ admin }: { admin?: Admin }) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
+      type: (admin?.type || ADMIN_ROLE.ADMIN) as ADMIN_ROLE,
       email: admin?.email || "",
       username: admin?.username || "",
       nickname: admin?.nickname || "",
@@ -59,7 +60,7 @@ export default function AdminForm({ admin }: { admin?: Admin }) {
           type: values.type as ADMIN_ROLE,
         });
       }
-      router.push("/admins");
+      router.push("/admin/admins");
       router.refresh();
     } catch (error) {
       alert(error instanceof Error ? error.message : "操作失败");

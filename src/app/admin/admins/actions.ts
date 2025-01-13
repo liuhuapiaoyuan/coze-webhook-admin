@@ -13,13 +13,13 @@ export async function getAdmins(
 export async function resetPassword(adminId: string) {
   // 这里需要在 AdminService 中实现重置密码的方法
   await AdminService.updateAdmin(adminId, { password: "admin" });
-  revalidatePath("/admins");
+  revalidatePath("/admin/admins");
   return { success: true };
 }
 
 export async function deleteAdmin(adminId: string) {
   await AdminService.deleteAdmin(adminId);
-  revalidatePath("/admins");
+  revalidatePath("/admin/admins");
   return { success: true };
 }
 
@@ -36,7 +36,7 @@ export async function createAdmin(data: {
     type: data.type,
     phone: data.phone,
   });
-  revalidatePath("/admins");
+  revalidatePath("/admin/admins");
   return { success: true };
 }
 
@@ -52,6 +52,6 @@ export async function updateAdmin(
   }
 ) {
   await AdminService.updateAdmin(adminId, data);
-  revalidatePath("/admins");
+  revalidatePath("/admin/admins");
   return { success: true };
 }
