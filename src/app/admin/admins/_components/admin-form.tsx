@@ -17,13 +17,9 @@ import { useRouter } from "next/navigation";
 import { createAdmin, updateAdmin } from "../actions";
 import { Admin } from "@prisma/client";
 import { ADMIN_ROLE } from "@/service/enum/ADMIN_ROLE";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+
+import { RadioCardChoose } from "@/components/ui/radio-card-choose";
+import { UserRoundCog, UserCheck2 } from "lucide-react";
 
 const formSchema = z.object({
   email: z.string().email({ message: "请输入有效的邮箱地址" }),
@@ -106,9 +102,26 @@ export default function AdminForm({ admin }: { admin?: Admin }) {
           name="type"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>角色</FormLabel>
+              <FormLabel>账户类型</FormLabel>
               <FormControl>
-                <Select {...field}>
+                <RadioCardChoose
+                  {...field}
+                  options={[
+                    {
+                      description: "需要通过角色配置才能获得权限进行操作",
+                      value: ADMIN_ROLE.ADMIN,
+                      label: "管理员",
+                      icon: <UserRoundCog />,
+                    },
+                    {
+                      value: ADMIN_ROLE.SUPERADMIN,
+                      label: "超级管理员",
+                      description: "无需配置角色，既可获得权限",
+                      icon: <UserCheck2 />,
+                    },
+                  ]}
+                />
+                {/* <Select {...field}>
                   <SelectTrigger>
                     <SelectValue placeholder="选择角色" />
                   </SelectTrigger>
@@ -118,7 +131,7 @@ export default function AdminForm({ admin }: { admin?: Admin }) {
                       超级管理员
                     </SelectItem>
                   </SelectContent>
-                </Select>
+                </Select> */}
               </FormControl>
               <FormMessage />
             </FormItem>
