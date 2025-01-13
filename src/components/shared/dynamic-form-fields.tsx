@@ -4,6 +4,8 @@ import React from "react";
 import { Plus, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import * as z from "zod";
+
 import {
   FormControl,
   FormField,
@@ -26,6 +28,14 @@ export interface FormField {
   description: string;
   fields?: FormField[]; // 用于 Object 和 Array 类型的子字段
 }
+
+export const FormFieldType: z.ZodTypeAny = z.object({
+  name: z.string(),
+  description: z.string(),
+  type: z.string(),
+
+  fields: z.optional(z.array(z.lazy(() => FormFieldType))),
+});
 
 interface DynamicFormFieldsProps {
   fields: FormField[];
@@ -96,90 +106,68 @@ export function DynamicFormFields({
     >
       <div className="flex flex-col gap-6">
         <div className="flex flex-col items-start gap-6 lg:flex-row">
-          <FormField
-            name={`fields.${index}.name`}
-            render={() => (
-              <FormItem className="flex-1">
-                <FormLabel className="text-sm font-semibold">
-                  字段名称
-                </FormLabel>
-                <FormControl>
-                  <Input
-                    value={field.name}
-                    onChange={(e) =>
-                      handleFieldChange(
-                        typeof parentIndex === "number" ? parentIndex : index,
-                        "name",
-                        e.target.value
-                      )
-                    }
-                    placeholder="请输入字段名称"
-                    className="mt-1"
-                  />
-                </FormControl>
-              </FormItem>
-            )}
-          />
+          <FormItem className="flex-1">
+            <FormLabel className="text-sm font-semibold">字段名称</FormLabel>
+            <FormControl>
+              <Input
+                value={field.name}
+                onChange={(e) =>
+                  handleFieldChange(
+                    typeof parentIndex === "number" ? parentIndex : index,
+                    "name",
+                    e.target.value
+                  )
+                }
+                placeholder="请输入字段名称"
+                className="mt-1"
+              />
+            </FormControl>
+          </FormItem>
 
-          <FormField
-            name={`fields.${index}.type`}
-            render={() => (
-              <FormItem className="flex-1">
-                <FormLabel className="text-sm font-semibold">
-                  字段类型
-                </FormLabel>
-                <Select
-                  value={field.type}
-                  onValueChange={(value) =>
-                    handleFieldChange(
-                      typeof parentIndex === "number" ? parentIndex : index,
-                      "type",
-                      value
-                    )
-                  }
-                >
-                  <FormControl>
-                    <SelectTrigger className="mt-1">
-                      <SelectValue placeholder="选择字段类型" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    {fieldTypes.map((type) => (
-                      <SelectItem key={type.value} value={type.value}>
-                        {type.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </FormItem>
-            )}
-          />
+          <FormItem className="flex-1">
+            <FormLabel className="text-sm font-semibold">字段类型</FormLabel>
+            <Select
+              value={field.type}
+              onValueChange={(value) =>
+                handleFieldChange(
+                  typeof parentIndex === "number" ? parentIndex : index,
+                  "type",
+                  value
+                )
+              }
+            >
+              <FormControl>
+                <SelectTrigger className="mt-1">
+                  <SelectValue placeholder="选择字段类型" />
+                </SelectTrigger>
+              </FormControl>
+              <SelectContent>
+                {fieldTypes.map((type) => (
+                  <SelectItem key={type.value} value={type.value}>
+                    {type.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </FormItem>
 
-          <FormField
-            name={`fields.${index}.description`}
-            render={() => (
-              <FormItem className="flex-1">
-                <FormLabel className="text-sm font-semibold">
-                  字段描述
-                </FormLabel>
-                <FormControl>
-                  <Input
-                    value={field.description}
-                    onChange={(e) =>
-                      handleFieldChange(
-                        typeof parentIndex === "number" ? parentIndex : index,
-                        "description",
-                        e.target.value
-                      )
-                    }
-                    placeholder="请输入字段描述"
-                    className="mt-1"
-                  />
-                </FormControl>
-              </FormItem>
-            )}
-          />
-
+          <FormItem className="flex-1">
+            <FormLabel className="text-sm font-semibold">字段描述</FormLabel>
+            <FormControl>
+              <Input
+                value={field.description}
+                onChange={(e) =>
+                  handleFieldChange(
+                    typeof parentIndex === "number" ? parentIndex : index,
+                    "description",
+                    e.target.value
+                  )
+                }
+                placeholder="请输入字段描述"
+                className="mt-1"
+              />
+            </FormControl>
+          </FormItem>
           <Button
             type="button"
             variant="ghost"
