@@ -9,7 +9,7 @@ export default async function ApiLogsPage(props: PageProps) {
         <h1 className="text-2xl font-bold">API调用日志</h1>
       </div>
       <PageTable
-        basePath="/api-logs"
+        basePath="/admin/api-logs"
         load={(data) =>
           getApiLogs({
             page: data.page,
