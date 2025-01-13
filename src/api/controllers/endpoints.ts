@@ -53,7 +53,9 @@ export const endpoints = new Elysia({
         api_id,
         "request"
       );
-      return await coze.request(body as Record<string, string>);
+      return await coze.request(body as Record<string, string>, {
+        maxAttempts: 60,
+      });
     },
     {
       params: t.Object({
